@@ -33,6 +33,7 @@ To avoid pathing issues on Windows, you may need to wrap the call to `npx` in `c
     "command": "cmd",
     "args": [
       "/c",
+      "npx",
       "mcp-remote@latest",
       "https://your-portainer-run/mcp",
       "--header",
