@@ -4,13 +4,7 @@ Portainer-Run has no permissions model of its own. Every access decision it make
 
 ## Authentication
 
-Users log into Portainer-Run with a **Portainer personal access token**, generated in Portainer under **Account → Access Tokens**. There's no separate Portainer-Run account to create, no duplicate user store, and no independent permissions model to keep in sync. The token _is_ the identity, and it carries the user's Portainer role with it.
-
-OAuth-authenticated Portainer instances aren't supported for login directly. Users in that setup still generate a personal access token from the Account page and use that instead.
-
-{% hint style="info" %}
-Note that the authentication process will soon be changing to more closely integrate with Portainer. This documentation will be updated when this is available.
-{% endhint %}
+Users log into Portainer-Run on the same URL as Portainer, with their Portainer credentials. There's no separate Portainer-Run account to create, no duplicate user store, and no independent permissions model to keep in sync. The token _is_ the identity, and it carries the user's Portainer role with it.
 
 ## User access determines cluster visibility
 

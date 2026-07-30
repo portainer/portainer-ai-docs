@@ -4,14 +4,6 @@
 * [Requirements](requirements.md)
 * [Quick Start](quick-start.md)
 
-## Installing Portainer-Run <a href="#install" id="install"></a>
-
-* [Overview](install/overview.md)
-* [Kubernetes](install/kubernetes.md)
-* [Docker](install/docker.md)
-* [Docker Compose](install/compose.md)
-* [Environment Variables](install/environment-variables.md)
-
 ## Using Portainer-Run <a href="#user" id="user"></a>
 
 * [Overview](user/overview.md)

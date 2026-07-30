@@ -2,13 +2,15 @@
 
 Deploy is how applications get onto Kubernetes in Portainer-Run. Drop in the files Claude, Cursor, or any other AI coding tool generated, and Portainer-Run handles runtime detection, dependency installation, Git commit, and Kubernetes deployment automatically. No Dockerfile, no CI pipeline, no container registry, and no platform engineering ticket.
 
-This is the path every business builder uses, and the one the [Assistant](assistant.md) defaults to recommending when someone describes an app they want running.
-
 ## Two ways to provide source
 
 **File upload**: upload or drag in the files your AI tool produced. Portainer-Run commits those files to your configured Git target before deploying.
 
+<figure><img src="../.gitbook/assets/deploy-upload-files.png" alt=""><figcaption></figcaption></figure>
+
 **Existing Git repository**: instead of uploading files, select a configured [Git target](admin/git-targets.md), branch, and optional subfolder. Portainer-Run fetches the file listing from that repository, detects the runtime, and clones directly from the source repository on every pod start. In this mode, no source files are additionally committed to the manifests repository; only the manifest itself is.
+
+<figure><img src="../.gitbook/assets/deploy-git-repo.png" alt=""><figcaption></figcaption></figure>
 
 ## Runtime detection
 

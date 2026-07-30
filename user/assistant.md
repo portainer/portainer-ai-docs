@@ -4,7 +4,7 @@ The Assistant is a persistent chat panel available on every page in Portainer-Ru
 
 ## Requirements
 
-The Assistant requires either `ANTHROPIC_API_KEY` or `OPENAI_API_KEY` to be configured on the server. Without one of these set, the Assistant button isn't shown at all. See [Requirements](../requirements.md) and [Installing](https://app.gitbook.com/s/wg4JrAPgL0W0wygwwbaI/install) for how to configure these.
+The Assistant requires either `ANTHROPIC_API_KEY` or `OPENAI_API_KEY` to be configured on the server. Without one of these set, the Assistant button isn't shown at all. See [Requirements](../requirements.md) for how to configure these.
 
 ## What it can do
 

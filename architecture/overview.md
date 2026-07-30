@@ -55,7 +55,7 @@ The server maintains two things under `/app/data`:
 * **`portainer-run.db`**: a SQLite database storing encrypted [Git target](../user/admin/git-targets.md) credentials.
 * **`cache.json`**: a file-backed cache of deployment status. On reconnect, the last known state is shown immediately while live data loads in the background, so the UI never shows a blank slate after a refresh.
 
-Both are keyed appropriately and persist only if `/app/data` is mounted as durable storage. See the [Installing](https://app.gitbook.com/s/wg4JrAPgL0W0wygwwbaI/install) pages for the volume or PVC configuration on each platform. `ENCRYPTION_KEY` must stay identical across every restart and redeploy. It's what makes the Git target credentials in that database readable, and losing or changing it makes them permanently undecryptable.
+Both are keyed appropriately and persist only if `/app/data` is mounted as durable storage. `ENCRYPTION_KEY` must stay identical across every restart and redeploy. It's what makes the Git target credentials in that database readable, and losing or changing it makes them permanently undecryptable.
 
 ## Next: Roles and RBAC
 

@@ -1,6 +1,6 @@
 # MCP
 
-Portainer-Run exposes a Model Context Protocol (MCP) endpoint at `POST /mcp`, so AI coding tools can deploy applications directly, with no browser and no human clicking through the UI at all. This is the same governed pipeline as [Vibe Deploy](deploy.md), just driven by an MCP-capable client instead of the web interface.
+Portainer-Run exposes a Model Context Protocol (MCP) endpoint at `POST /mcp`, so AI coding tools can deploy applications directly, with no browser and no human clicking through the UI at all. This is the same governed pipeline as [Deploy](deploy.md), just driven by an MCP-capable client instead of the web interface.
 
 ## Authentication
 
@@ -81,4 +81,4 @@ A working endpoint returns a JSON-RPC response listing the tools above.
 
 ## The file relay gateway
 
-MCP transfers files inline as part of the `deploy_app` call by default, which works fine for typical AI-generated source drops. For larger applications, set `GATEWAY_URL` (to `https://run-gateway.portainer.ai`, Portainer's hosted relay) on the Portainer-Run instance. See [Installing → Docker Compose](../install/compose.md#the-file-relay-gateway). Once configured, large [Vibe Deploy](deploy.md) uploads route through that gateway instead of being transferred inline over the MCP connection, avoiding payload-size limits some MCP clients or transports impose. This is a server-side setting; there's nothing for the calling MCP client to configure differently.
+MCP transfers files inline as part of the `deploy_app` call by default, which works fine for typical AI-generated source drops. For larger applications, uploads are routed through `https://run-gateway.portainer.ai`, Portainer's hosted relay. Large [Deploy](deploy.md) uploads route through the gateway instead of being transferred inline over the MCP connection, avoiding payload-size limits some MCP clients or transports impose. This is a server-side setting; there's nothing for the calling MCP client to configure differently.

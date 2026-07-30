@@ -34,5 +34,4 @@ Underneath all of it, every deployment is committed to a sanctioned Git reposito
 ## Where to go next
 
 * New to Portainer-Run? Start with [Requirements](requirements.md) and then [Quick Start](quick-start.md).
-* Installing for real? Head to [Installing Portainer-Run](https://app.gitbook.com/s/wg4JrAPgL0W0wygwwbaI/install).
 * Already running it? Jump to [Using Portainer-Run](https://app.gitbook.com/s/wg4JrAPgL0W0wygwwbaI/user) to explore the interface, or [Architecture](https://app.gitbook.com/s/wg4JrAPgL0W0wygwwbaI/architecture) to understand how it fits together with Portainer.

@@ -12,11 +12,15 @@ The Session section of the navigation shows the logged-in Portainer username, wi
 
 Each target stores:
 
-* **Provider**: GitHub, GitLab, Gitea, or Other.
+* **Provider**: GitHub, GitLab, Gitea, or Other, and an optional server URL.
+* **Authentication** method - Personal Access Token or SSH Key.
 * **Repository**, in `owner/repo` form.
-* **Personal access token**, encrypted at rest using `ENCRYPTION_KEY` (see [Requirements](../../requirements.md) and [Installing](https://app.gitbook.com/s/wg4JrAPgL0W0wygwwbaI/install)). This key must remain identical across every Portainer-Run deploy, or stored targets become unreadable.
-* An optional **path prefix**.
+* **Git username** and **Personal Access Token** or **SSH private key** (depending on your choice of **Authentication**), encrypted at rest using `ENCRYPTION_KEY` (see [Requirements](../../requirements.md)). This key must remain identical across every Portainer-Run deploy, or stored targets become unreadable.
 * A **default branch**.
+* An optional **path prefix**.
+* Whether the GIt target is a **Shared target** (ie, available to other Portainer-Run users or just the user that created it).
+
+<figure><img src="../../.gitbook/assets/git-target-add.png" alt=""><figcaption></figcaption></figure>
 
 ### Token scopes
 
@@ -39,7 +43,7 @@ The **Test** button on each target checks connectivity and reports read and writ
 Regardless of which deploy path is used, Portainer-Run keeps a consistent structure so deployments across environments and namespaces stay cleanly separated within the same repository:
 
 * Manifests: `<env-name>/<namespace>/<appname>.yaml`
-* Source files (Vibe Deploy file uploads only): `<env-name>/<namespace>/<appname>/src/`
+* Source files: `<env-name>/<namespace>/<appname>/src/`
 
 ## Deleting an application
 

@@ -1,69 +1,100 @@
 # Quick Start
 
-This gets Portainer-Run running as fast as possible using Docker. If you're deploying to Kubernetes or using Docker Compose, see [Installing Portainer-Run](https://app.gitbook.com/s/wg4JrAPgL0W0wygwwbaI/install) for platform-specific detail; the steps below still apply conceptually.
+Portainer-Run is installed as an add-on within Portainer Business Edition. Once you have confirmed you meet the [requirements](requirements.md) for install, these are the steps to follow.
 
 {% stepper %}
 {% step %}
-### Generate an encryption key
+### Log into Portainer as an adminstrator
 
-Portainer-Run needs a stable, 32+ character key to encrypt stored Git target credentials. Generate one and keep it somewhere safe. You'll need the exact same value on every future redeploy.
-
-```bash
-openssl rand -hex 32
-```
+Add-ons can only be enabled by an administrator user.
 {% endstep %}
 
 {% step %}
-### Run the container
+### Install the Portainer-Run add-on
 
-```bash
-docker run -d \
-  -p 443:443 \
-  -p 80:80 \
-  -v portainer-run-data:/app/data \
-  -e PORTAINER_URL=https://portainer.example.com:9443 \
-  -e ENCRYPTION_KEY=<the-key-you-generated> \
-  -e ANTHROPIC_API_KEY=sk-ant-... \
-  --name portainer-run \
-  portainer/portainer-run:latest
-```
+Within Portainer, scroll to the Administration section in the left menu and click Add-ons.
 
-* `PORTAINER_URL` and `ENCRYPTION_KEY` are the only two required variables.
-* `ANTHROPIC_API_KEY` (or `OPENAI_API_KEY`) is optional. Include it if you want the Assistant panel and AI log triage from the start.
-* The named volume `portainer-run-data` mounted at `/app/data` persists Git target credentials and deployment status across restarts. Skip it and you'll need to reconfigure Git targets every time the container restarts.
+Here you will see a list of the available add-ons. We want to install Portainer-Run, so find Portainer-Run in the list and click Install.
 
-On first start, the container generates a self-signed TLS certificate valid for 3 years. Your browser will warn about it; accept the exception to proceed, or provide real certificates later (see [Installing Portainer-Run → Docker](install/docker.md)).
+<figure><img src=".gitbook/assets/addon-list.png" alt=""><figcaption></figcaption></figure>
 {% endstep %}
 
 {% step %}
-### Generate a Portainer personal access token
+### Configure the add-on
 
-In Portainer, go to **Account → Access Tokens** and create a new token for the account you want Portainer-Run to act as. Portainer-Run inherits this account's RBAC role completely.
+You will be taken to the Set up Portainer-Run page where you can configure Portainer-Run.&#x20;
+
+The Chart source and Version should be pre-selected - we recommend sticking with the latest version in most cases.
+
+<figure><img src=".gitbook/assets/addon-install-source.png" alt=""><figcaption></figcaption></figure>
+
+An Encryption Key will also be pre-generated for you. You can change this if you want.
+
+<figure><img src=".gitbook/assets/addon-install-encryption-key.png" alt=""><figcaption></figcaption></figure>
+
+If you want to use the Assistant functionality within Portainer-Run, provide either an Anthropic API Key or an OpenAI API Key in the relevant field. If neither value is set, the Assistant feature will not be available in Portainer-Run.
+
+<figure><img src=".gitbook/assets/addon-install-api-keys.png" alt=""><figcaption></figcaption></figure>
+
+You can optionally define a Storage Class to use for Portainer-Run's session cache. You can leave this blank to use the cluster's default StorageClass.
+
+<figure><img src=".gitbook/assets/addon-install-storageclass.png" alt=""><figcaption></figcaption></figure>
+
+Under Image you can specify the repository and tag of the Portainer-Run image to use. In most cases you won't need to change this.
+
+<figure><img src=".gitbook/assets/addon-install-image.png" alt=""><figcaption></figcaption></figure>
+
+In Config Map you can change the OpenAI model if you are using OpenAI for the Assistant. This field has no effect if you are using Anthropic.
+
+<figure><img src=".gitbook/assets/addon-install-openai-model.png" alt=""><figcaption></figcaption></figure>
+
+When you're ready to proceed, click the Next button.
 {% endstep %}
 
 {% step %}
-### Log in
+### Assign access to Portainer-Run
 
-Navigate to `https://<your-host>` and paste in the personal access token. You'll land on the **Applications** page, Portainer-Run's main operational view.
+Portainer-Run lets you configure which teams have access to it. If you want to permit only administrators to access Portainer-Run you do not need to configure teams here. Otherwise, select the teams you want to provide access to from the dropdown.
+
+<figure><img src=".gitbook/assets/addon-install-assign-teams.png" alt=""><figcaption></figcaption></figure>
+
+If you want to prevent access to Portainer for the selected teams, toggle on the Deny access to Portainer for the selected teams option. If this is enabled, when a user within the specified teams logs into Portainer they will be sent to Portainer-Run, and will not be able to access Portainer itself.
+
+When you're ready, click the Install button.
 {% endstep %}
 
 {% step %}
-### Connect a Git Target
+### Wait for the install to complete
 
-Every deployment path in Portainer-Run commits to Git, so before you can deploy anything you need at least one Git Target configured. Go to the Git Targets area (**Admin → Git Targets** if you're an admin, or your own Git Targets page otherwise) and add a repository, GitHub, GitHub Enterprise Server, GitLab, or Gitea, along with a personal access token that has read/write access to it.
+The installation is now underway. A namespace for Portainer-Run will be created, the image pulled, and the add-on will be deployed.
+
+<figure><img src=".gitbook/assets/addon-install-installing.png" alt=""><figcaption></figcaption></figure>
+
+Once the install has completed, the status will change to Running and the currently deployed version will be shown.
+
+<figure><img src=".gitbook/assets/addon-install-complete.png" alt=""><figcaption></figcaption></figure>
 {% endstep %}
 
 {% step %}
-### Deploy your first application
+### Access Portainer-Run
 
-From the Applications page, click **+ Deploy**. Drop in the files an AI coding tool produced (a `package.json`-based Node app, a Python app, a static site, and so on) and Portainer-Run detects the runtime, installs dependencies, commits to your Git target, and deploys it. No Dockerfile needed. A sensible default resource request and limit is applied automatically, so the deployment is safe by default without any extra configuration.
+Now that the install is complete you can access Portainer-Run from within Portainer by clicking the switcher icon  ![](.gitbook/assets/switcher-icon.png)  in the top left. This will show a dropdown list of the different products available to you, including Portainer-Run.
 
-Once deployed, the app shows up on the Applications page with a live status indicator. Click into it for logs, metrics, revision history, and the ability to edit or roll back.
+<figure><img src=".gitbook/assets/addon-switcher.png" alt=""><figcaption></figcaption></figure>
+
+Click on the Portainer-Run option to access the Portainer-Run UI.
+{% endstep %}
+
+{% step %}
+### You're done!
+
+You have now installed Portainer-Run on your cluster. Enjoy!
+
+<figure><img src=".gitbook/assets/portainer-run-fresh-install-ui.png" alt=""><figcaption></figcaption></figure>
 {% endstep %}
 {% endstepper %}
 
 ## What's next
 
 * [Requirements](requirements.md): if you skipped ahead, check you have everything in place.
-* [Installing Portainer-Run](https://app.gitbook.com/s/wg4JrAPgL0W0wygwwbaI/install): detailed, platform-specific installation (Kubernetes, Docker, Docker Compose).
 * [Using Portainer-Run](https://app.gitbook.com/s/wg4JrAPgL0W0wygwwbaI/user): a full tour of the interface once you're up and running.
