@@ -42,8 +42,6 @@ A **Show technical details** button reveals two further tabs for anyone who need
 | **App internals** | Per-container configuration: image, ports, pull policy, resource limits, environment variables, volume mounts. |
 | **Revisions**     | ReplicaSet history, most recent first, each with a **Rollback** button.                                        |
 
-**Show technical details** also reveals a **Migrate** button, hidden by default. See [Migrate](applications.md#migrate) below.
-
 ### Overview
 
 The Overview tab is deliberately simple:
@@ -60,19 +58,6 @@ The Edit tab covers everything needed to change a running application, organized
 * **Exposure**: an **Expose Service As** dropdown (NodePort, LoadBalancer, or Ingress) and a **Port** field where relevant. Changes are applied with a **Save Exposure** button that only appears once something has changed.
 * **App Settings**: add, update, or remove environment variables.
 * **Upload updated files**: select a folder or individual files to replace the deployed code with an updated version. A **Commit & Restart** button commits the selected files to the repository and redeploys and restarts the application.
-
-### Migrate
-
-Migrate opens a popup for moving an application to a different environment, a different namespace, or both. It has two fields:
-
-* **Target Environment**: a dropdown to select the destination environment.
-* **Target Namespace**: a dropdown to select the destination namespace.
-
-And three buttons:
-
-* **Cancel**: closes the popup and returns to the application detail page without making any changes.
-* **Clone**: creates a copy of the application at the target location, leaving the original running as-is.
-* **Move**: creates the application at the target location, then removes the original. Because the source deployment isn't removed until the target is confirmed created, moving an application can involve some downtime between the two steps.
 
 ## Default resource allocation
 

@@ -3,6 +3,7 @@
 * [Welcome to Portainer-Run](README.md)
 * [Requirements](requirements.md)
 * [Quick Start](quick-start.md)
+* [Initial configuration](initial-configuration.md)
 
 ## Using Portainer-Run <a href="#user" id="user"></a>
 

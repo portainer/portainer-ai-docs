@@ -97,4 +97,5 @@ You have now installed Portainer-Run on your cluster. Enjoy!
 ## What's next
 
 * [Requirements](requirements.md): if you skipped ahead, check you have everything in place.
+* [Initial configuration](initial-configuration.md): to get Portainer and Portainer-Run configured for optimal usage.
 * [Using Portainer-Run](https://app.gitbook.com/s/wg4JrAPgL0W0wygwwbaI/user): a full tour of the interface once you're up and running.
