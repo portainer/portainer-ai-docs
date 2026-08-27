@@ -7,6 +7,7 @@ Once connected, Portainer-Run's navigation is organized into four areas: **Workl
 * [**Admin**](admin/): visible only to Portainer admins.
   * [Git Targets](admin/git-targets.md): manage personal and shared repository connections.
   * [Cluster Readiness](admin/cluster-readiness.md): environment health checks and enable/disable controls.
+  * [Settings](admin/settings.md): for Portainer-Run's configuration.
 * [**Assistant**](assistant.md): a persistent, context-aware chat panel available on every page.
 * [**MCP**](mcp.md): deploy applications directly from Claude Desktop, Claude Code, or any MCP-capable client.
 

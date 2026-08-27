@@ -15,7 +15,7 @@ Each target stores:
 * **Provider**: GitHub, GitLab, Gitea, or Other, and an optional server URL.
 * **Authentication** method - Personal Access Token or SSH Key.
 * **Repository**, in `owner/repo` form.
-* **Git username** and **Personal Access Token** or **SSH private key** (depending on your choice of **Authentication**), encrypted at rest using `ENCRYPTION_KEY` (see [Requirements](../../requirements.md)). This key must remain identical across every Portainer-Run deploy, or stored targets become unreadable.
+* **Git username** and **Personal Access Token** or **SSH private key** (depending on your choice of **Authentication**), encrypted at rest using the encryption key provided during initial configuration. This key must remain identical across every Portainer-Run deploy, or stored targets become unreadable.
 * A **default branch**.
 * An optional **path prefix**.
 * Whether the GIt target is a **Shared target** (ie, available to other Portainer-Run users or just the user that created it).

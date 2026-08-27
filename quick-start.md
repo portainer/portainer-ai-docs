@@ -1,94 +1,97 @@
 # Quick Start
 
-Portainer-Run is installed as an add-on within Portainer Business Edition. Once you have confirmed you meet the [requirements](requirements.md) for install, these are the steps to follow.
+Portainer-Run can be installed on a fresh server along with Portainer Business using the terminal installer. The following command will download the install script and run it on your server.
+
+{% hint style="warning" %}
+Ensure you meet the [requirements](requirements.md) before running the script.
+{% endhint %}
+
+```
+curl -sfL https://get.portainer.run/get.sh | sudo sh -
+```
+
+Follow the steps in the installer to complete the setup. You will be asked to make some decisions along the way - we'll outline those below.
+
+{% hint style="info" %}
+Portainer-Run can also be installed as an add-on within an existing Portainer Business installation on Kubernetes. You can learn more about this approach [in the Portainer documentation](https://docs.portainer.io/admin/add-ons).
+{% endhint %}
 
 {% stepper %}
 {% step %}
-### Log into Portainer as an adminstrator
+### Domain
 
-Add-ons can only be enabled by an administrator user.
+You will first be asked for the domain you want to use for applications deployed in Portainer-Run. Deployed applications will be given a subdomain of this domain - for example, if your application was called `myapp` and your domain was `apps.mycompany.com` your application's full URL would be `myapp.apps.mycompany.com`.&#x20;
+
+The installer will check to see whether the domain you provide and the wildcard subdomain of that domain are resolvable. If they are not able to be resolved, you can perform a re-check at this stage once you have configured them, or you also have the option to proceed anyway.
 {% endstep %}
 
 {% step %}
-### Install the Portainer-Run add-on
+### Certificate
 
-Within Portainer, scroll to the Administration section in the left menu and click Add-ons.
+Next you can choose the SSL certificate to use for your applications. The options are:
 
-Here you will see a list of the available add-ons. We want to install Portainer-Run, so find Portainer-Run in the list and click Install.
-
-<figure><img src=".gitbook/assets/addon-list.png" alt=""><figcaption></figcaption></figure>
+* **Self-signed**: Portainer-Run will generate a self-signed certificate for your applications. By default, browsers will display a warning when visiting sites with self-signed certificates.
+* **Let's Encrypt via DNS-01**: Portainer-Run will use Let's Encrypt to generate trusted certificates automatically for your applications. Your DNS records must be with Cloudflare for this option to work, and you must have a Cloudflare API key.
+* **Custom certificate**: Portainer-Run will use a custom wildcard certificate you provide for your applications. You will need to supply your own certificate and key.
 {% endstep %}
 
 {% step %}
-### Configure the add-on
+### Ingress controller
 
-You will be taken to the Set up Portainer-Run page where you can configure Portainer-Run.&#x20;
+An ingress controller is required to route requests to your applications. Here you can choose which to install.
 
-The Chart source and Version should be pre-selected - we recommend sticking with the latest version in most cases.
-
-<figure><img src=".gitbook/assets/addon-install-source.png" alt=""><figcaption></figcaption></figure>
-
-An Encryption Key will also be pre-generated for you. You can change this if you want.
-
-<figure><img src=".gitbook/assets/addon-install-encryption-key.png" alt=""><figcaption></figcaption></figure>
-
-If you want to use the Assistant functionality within Portainer-Run, provide either an Anthropic API Key or an OpenAI API Key in the relevant field. If neither value is set, the Assistant feature will not be available in Portainer-Run.
-
-<figure><img src=".gitbook/assets/addon-install-api-keys.png" alt=""><figcaption></figcaption></figure>
-
-You can optionally define a Storage Class to use for Portainer-Run's session cache. You can leave this blank to use the cluster's default StorageClass.
-
-<figure><img src=".gitbook/assets/addon-install-storageclass.png" alt=""><figcaption></figcaption></figure>
-
-Under Image you can specify the repository and tag of the Portainer-Run image to use. In most cases you won't need to change this.
-
-<figure><img src=".gitbook/assets/addon-install-image.png" alt=""><figcaption></figcaption></figure>
-
-In Config Map you can change the OpenAI model if you are using OpenAI for the Assistant. This field has no effect if you are using Anthropic.
-
-<figure><img src=".gitbook/assets/addon-install-openai-model.png" alt=""><figcaption></figcaption></figure>
-
-When you're ready to proceed, click the Next button.
+* **Traefik**: The default option, and works out of the box.&#x20;
+* **Pomerium (coming soon)**: The Pomerium ingress controller provides secure-by-default ingress, and requires an OIDC identity provider in order to handle access control. This option is in development and will be available in a future release.
 {% endstep %}
 
 {% step %}
-### Assign access to Portainer-Run
+### License key
 
-Portainer-Run lets you configure which teams have access to it. If you want to permit only administrators to access Portainer-Run you do not need to configure teams here. Otherwise, select the teams you want to provide access to from the dropdown.
-
-<figure><img src=".gitbook/assets/addon-install-assign-teams.png" alt=""><figcaption></figcaption></figure>
-
-If you want to prevent access to Portainer for the selected teams, toggle on the Deny access to Portainer for the selected teams option. If this is enabled, when a user within the specified teams logs into Portainer they will be sent to Portainer-Run, and will not be able to access Portainer itself.
-
-When you're ready, click the Install button.
+Portainer-Run installs Portainer Business, which requires a license key. If you have a key you can enter it now, otherwise you'll be asked to provide it when accessing Portainer for the first time after the install completes.
 {% endstep %}
 
 {% step %}
-### Wait for the install to complete
+### Review
 
-The installation is now underway. A namespace for Portainer-Run will be created, the image pulled, and the add-on will be deployed.
+Finally, the choices you've made so far will be shown for review. If you need to make any changes, choose **Back to edit** to return to the start.
 
-<figure><img src=".gitbook/assets/addon-install-installing.png" alt=""><figcaption></figcaption></figure>
+If you're ready to proceed, choose **Confirm and install**.
+{% endstep %}
 
-Once the install has completed, the status will change to Running and the currently deployed version will be shown.
+{% step %}
+### Installing
 
-<figure><img src=".gitbook/assets/addon-install-complete.png" alt=""><figcaption></figcaption></figure>
+The installation process will now begin. Progress across the installation steps will be shown as they happen, and you can expand or collapse items in the list to see detail on each step.
+
+Once the installation completes you'll be provided with the URL for Portainer-Run as well as an admin username and password. Make sure you copy the password (press `p` to reveal the password) as it won't be displayed again.
 {% endstep %}
 
 {% step %}
 ### Access Portainer-Run
 
-Now that the install is complete you can access Portainer-Run from within Portainer by clicking the switcher icon  ![](.gitbook/assets/switcher-icon.png)  in the top left. This will show a dropdown list of the different products available to you, including Portainer-Run.
+Now that the install is complete you can access Portainer-Run from the URL provided. On initial access after install you will be asked to provide your Portainer Business license key (if you didn't supply it during the installation) and asked whether to enable Edge Compute.&#x20;
+
+Once this is complete you will be in the Portainer Business interface. From here you can access Portainer-Run by clicking the switcher icon  ![](.gitbook/assets/switcher-icon.png)  in the top left. This will show a dropdown list of the different products available to you, including Portainer-Run.
 
 <figure><img src=".gitbook/assets/addon-switcher.png" alt=""><figcaption></figcaption></figure>
 
-Click on the Portainer-Run option to access the Portainer-Run UI.
+Click on the **Portainer-Run** option to access the Portainer-Run UI.
+{% endstep %}
+
+{% step %}
+### Complete the initial setup
+
+One last step before we're ready to go - when you first access Portainer-Run as an administrator you'll be asked to set an encryption key. This key encrypts the saved credentials used by Portainer-Run. You can click **Generate** to generate a key for you, or enter one manually.
+
+<figure><img src=".gitbook/assets/portainer-run-setup-encryption-key.png" alt=""><figcaption></figcaption></figure>
+
+Once you have a key entered, click **Create key and finish setup**.
 {% endstep %}
 
 {% step %}
 ### You're done!
 
-You have now installed Portainer-Run on your cluster. Enjoy!
+You have now installed Portainer-Run. Enjoy!
 
 <figure><img src=".gitbook/assets/portainer-run-fresh-install-ui.png" alt=""><figcaption></figcaption></figure>
 {% endstep %}

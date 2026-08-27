@@ -1,55 +1,26 @@
 # Requirements
 
-Before installing Portainer-Run, make sure the following are in place.
+The Portainer-Run installation script installs most of what is needed, but it does expect you to have a few things in place.
 
-## Portainer
+## A server
 
-* **Portainer Business Edition**, already deployed and managing the Kubernetes environment(s) you want Portainer-Run to expose. Portainer-Run is an addon on top of Portainer: it does not replace it and cannot run without it.
-* Portainer must be installed on a Kubernetes environment (any flavor of Kubernetes), and that environment must exist as an environment in Portainer (see below).
+You will need a server to install on. We've tested extensively on Ubuntu Server 26.04 LTS but most Linux distributions should suffice. You will need:
 
-## Kubernetes
+* Root / `sudo` access on the server. This level of access is needed to install KubeSolo, Portainer-Run and the dependencies.
+* Internet access from the server. This is to access the install script as well as the upstream binaries.
+* `iptables` and `curl` installed. These are required for KubeSolo and for downloading the installation script.
 
-* A **default StorageClass** configured on the local cluster, as well as on any Kubernetes environment where you plan to deploy. Without one, PersistentVolumeClaims will remain unbound and affected applications won't start.
-* An **Ingress controller** installed on any cluster where you plan to expose applications via Ingress. Portainer-Run can create Ingress resources but does not install or configure an ingress controller itself.
-* **metrics-server** installed on any cluster where you want the Metrics tab (CPU/memory sparklines) to populate.
+In terms of specs, this will depend on the amount of applications you intend to run. KubeSolo (the Kubernetes distribution that Portainer-Run installs) is designed to consume as few resources as possible, as is Portainer-Run itself, so the majority of your resource will go to your applications.
 
-## Git
+Every deployed application receives a sane default resource request and limit automatically: **0.1 CPU / 1 GiB memory requested, 1 CPU / 4 GiB memory as the limit.**
 
-* A Git repository to act as the GitOps source of truth: for example GitHub, GitHub Enterprise Server, GitLab (SaaS or self-hosted), or Gitea. This is where Portainer-Run commits manifests and, for file-upload deployments, source code.
-* A personal access token for that repository with read/write access:
-  * **GitHub fine-grained PAT:** Contents (read and write) permission on the target repository.
-  * **GitHub classic PAT:** `repo` scope.
-  * **GitLab / Gitea:** an access token with equivalent read/write repository permissions.
+## A Portainer Business license key
 
-## Runtime environment for Portainer-Run itself
+Portainer-Run relies on Portainer Business as the engine that powers it. Portainer Business is installed by the Portainer-Run installation script, and requires a license key. You can enter this during the installation or on initial login.
 
-Portainer-Run runs as a Kubernetes workload alongside the infrastructure it manages. You'll need:
+## Optional: An Anthropic or OpenAI API key
 
-* **Portainer installed on a Kubernetes cluster.** At present we don't support running Portainer-Run on other platforms.
-* Persistent storage of at least a few hundred MB for the SQLite database (encrypted Git target credentials) and the deployment status cache.
-* Network egress to your Git provider (GitHub, GitLab, or Gitea) and, if you want AI features, to Anthropic and/or OpenAI.
-
-## Optional: AI Assistant and AI-powered log triage
-
-* An **Anthropic API key** and/or an **OpenAI API key**, if you want the Assistant panel and AI-powered log analysis. Without either key set, the Assistant is not shown at all. If both are set, Anthropic takes priority unless `AI_PROVIDER` is set explicitly.
-
-## Supported application types
-
-No additional infrastructure is required, but it's worth knowing what can and can't run before you plan your rollout:
-
-| Detected from                                 | Runtime          |
-| --------------------------------------------- | ---------------- |
-| `package.json`                                | Node.js 22       |
-| `requirements.txt` or any `.py` file          | Python 3.12      |
-| `Gemfile` or any `.rb` file                   | Ruby 3.3         |
-| Any `.php` file                               | PHP 8.3 (Apache) |
-| Static assets only (HTML/CSS/JS/images/fonts) | nginx            |
-
-Deploy supports single-container applications only, with no build or compile step. Go, Java, Rust, .NET, and any other language requiring compilation are out of scope.
-
-## Default resource allocation
-
-Every deployed application receives a sane default resource request and limit automatically: **0.1 CPU / 1 GiB memory requested, 1 CPU / 4 GiB memory as the limit.** No sizing decisions are needed to deploy safely. An administrator can adjust these after deployment from Portainer if a workload needs more or less.
+Portainer-Run's Assistant feature lets you talk to either Anthropic or OpenAI to help deploy applications and diagnose issues with your deployments. Once Portainer-Run is installed, you can set your API key under Settings. If no API key for either Anthropic or OpenAI is provided, then the Assistant feature will be unavailable.
 
 ## Next step
 

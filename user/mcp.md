@@ -61,6 +61,33 @@ To avoid pathing issues on Windows, you may need to wrap the call to `npx` in `c
 {% endtab %}
 {% endtabs %}
 
+{% hint style="info" %}
+If you are using a self-signed certificate, you will need the following environment variable set:
+
+```json
+"env": { "NODE_TLS_REJECT_UNAUTHORIZED": "0" }
+```
+
+For example:
+
+```json
+"mcpServers": {
+  "portainer-run": {
+    "command": "cmd",
+    "args": [
+      "/c",
+      "npx",
+      "mcp-remote@latest",
+      "https://your-portainer-run/mcp",
+      "--header",
+      "X-API-Key: YOUR_PORTAINER_TOKEN"
+    ],
+    "env": { "NODE_TLS_REJECT_UNAUTHORIZED": "0" }
+  }
+}
+```
+{% endhint %}
+
 Config file location:
 
 * **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`  or `%LOCALAPPDATA%\Packages\Claude_pzs8sxrjxfjjc\LocalCache\Roaming\Claude` depending on how it was installed

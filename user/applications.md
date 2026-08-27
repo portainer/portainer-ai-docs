@@ -63,6 +63,20 @@ The Edit tab covers everything needed to change a running application, organized
 
 Every application deployed through Portainer-Run receives a default resource request and limit automatically: **0.1 CPU / 1 GiB memory requested, 1 CPU / 4 GiB memory as the limit.** This is applied without any input needed at deploy time. An administrator can adjust it afterward from within Portainer if a workload needs more or less.
 
+## Supported application types
+
+No additional infrastructure is required, but it's worth knowing what can and can't run before you plan your rollout:
+
+| Detected from                                 | Runtime          |
+| --------------------------------------------- | ---------------- |
+| `package.json`                                | Node.js 22       |
+| `requirements.txt` or any `.py` file          | Python 3.12      |
+| `Gemfile` or any `.rb` file                   | Ruby 3.3         |
+| Any `.php` file                               | PHP 8.3 (Apache) |
+| Static assets only (HTML/CSS/JS/images/fonts) | nginx            |
+
+Deploy supports single-container applications only, with no build or compile step. Go, Java, Rust, .NET, and any other language requiring compilation are out of scope.
+
 ## Notes on scope
 
 Portainer-Run only surfaces deployments it created itself, filtered by the `managed-by=portainer-run` label. Anything deployed through Portainer's own UI or `kubectl` won't show up on this page.

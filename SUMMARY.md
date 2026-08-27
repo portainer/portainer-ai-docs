@@ -13,6 +13,7 @@
 * [Admin](user/admin/README.md)
   * [Git Targets](user/admin/git-targets.md)
   * [Cluster Readiness](user/admin/cluster-readiness.md)
+  * [Settings](user/admin/settings.md)
 * [Assistant](user/assistant.md)
 * [MCP](user/mcp.md)
 
