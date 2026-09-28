@@ -1,37 +1,35 @@
-# Welcome to Portainer-Run
+# Welcome to Portainer AI
 
-Portainer-Run is a governed self-service layer that lets non-developer business teams deploy the apps they build with AI tools onto your organization's own Kubernetes, without ever needing to know anything about Kubernetes, containers, or infrastructure.
+Portainer AI is a family of products for putting AI to work on the Kubernetes platforms you already run, under the controls your security team already requires. Each product runs inside your own environment, uses your existing Portainer RBAC, and treats Git as the source of truth for every change it makes.
 
-<a href="https://app.gitbook.com/s/wg4JrAPgL0W0wygwwbaI/architecture" class="button secondary" data-icon="buildings">Architecture</a><a href="requirements.md" class="button secondary" data-icon="clipboard-list-check">Requirements</a><a href="quick-start.md" class="button primary" data-icon="rocket-launch">Quick Start</a>
+This documentation covers two of the products: **Portainer-Run** and **Portainer-Command**.
+
+<a href="portainer-run/README.md" class="button primary" data-icon="rocket-launch">Portainer-Run</a><a href="portainer-command/README.md" class="button primary" data-icon="terminal">Portainer-Command</a>
 
 ***
 
-## Why Portainer-Run exists
+## The products
 
-AI has made everyone a developer. Not a software engineer, not a full-stack engineer, but a developer: someone who can describe a business problem to an AI coding tool and get a working application out the other side. The barrier to creation has effectively gone.
+<table data-view="cards"><thead><tr><th></th><th></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td><strong>Portainer-Run</strong></td><td>A governed place to run the AI-built apps your people are already building. Business users deploy straight from source, or from an AI coding tool over MCP, without needing to know anything about Kubernetes.</td><td><a href="portainer-run/README.md">portainer-run/README.md</a></td></tr><tr><td><strong>Portainer-Command</strong></td><td>The safe way to put AI agents to work on your Kubernetes fleet. Agents read cluster state through expiring, read-only sessions, and every change they want to make becomes a Git pull request that a person approves.</td><td><a href="portainer-command/README.md">portainer-command/README.md</a></td></tr></tbody></table>
 
-The best AI-assisted development tools know this, which is why they push hosting onto their own SaaS or PaaS. It's the only way to keep the experience seamless end to end. That works right up until the app needs to talk to something inside your network: an internal database, an on-prem API, a system that lives behind the firewall and isn't going anywhere. At that point the experience collapses, and the only path forward is a ticket to the platform team.
+The family also includes [Portainer-AiGrid](https://portainer.ai/products/portainer-aigrid), a self-hosted retrieval platform that turns your document corpus into a private, citable index any AI agent can query. It isn't covered in this documentation.
 
-That platform team is already stretched. The influx of deployment requests from people who have never touched infrastructure, app owners, business developers, support staff, people who vibe-coded their first container last Tuesday, is a real and growing problem with no clean answer today. Buying an Internal Developer Platform that takes a year to configure before anyone can use it isn't the answer either.
+## Which product do I need?
 
-Portainer-Run sits in that gap. A container-ready application is already an artifact AI coding tools can produce. Portainer-Run is the "now run it, inside your environment" layer, with the platform team's guardrails baked in via Portainer's existing RBAC, Git-based governance, and policy controls. The platform team's role shifts from processing every deployment ticket to setting the rules once.
+Each product stands alone, so start with the problem in front of you.
 
-It is intentionally narrow in scope. Portainer-Run does not replace Portainer. It does not try to serve the engineer who already has full cluster access and wants a powerful agent with deep API reach; that's a different product for a different persona. Portainer-Run surfaces one workflow, deploy, run, and operate a containerized workload, in the simplest interface possible, for the people who have no idea what a Pod is and shouldn't need to.
+| If you need to...                                                                                                   | Use                                        |
+| ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------ |
+| Give business teams a safe, self-service way to deploy the apps they build with AI tools, inside your own network   | [Portainer-Run](portainer-run/README.md)         |
+| Let engineers use AI agents (Claude Code, Cursor, or a built-in workspace) to investigate and change your clusters  | [Portainer-Command](portainer-command/README.md) |
+| Govern AI agents your teams are already pointing at your clusters, with a full audit trail and an emergency halt    | [Portainer-Command](portainer-command/README.md) |
 
-## What Portainer-Run does
+The two products serve different people. Portainer-Run is for people who have no idea what a Pod is and shouldn't need to. Portainer-Command is for the people who do, and for the platform and security teams responsible for what their agents are allowed to touch.
 
-Portainer-Run connects to your Portainer instance using a personal access token. Access is governed entirely by your Portainer RBAC role, so there is no separate user or permissions model to manage. Once connected, it provides a unified, self-service view across every Kubernetes environment your account can reach.
+## What the products have in common
 
-From Portainer-Run, a business builder can:
-
-* **Deploy an AI-built application straight from source**: no Dockerfile, no container registry, no platform engineering ticket. Sane resource requests and limits are applied automatically, so a first deployment doesn't need an administrator's involvement to be safe by default.
-* **Monitor, scale, restart, and roll back** everything they've deployed from a single operational view.
-* **Update a running application** by uploading revised files, which commits the change to Git and redeploys it.
-* **Ask the built-in Assistant** questions about their services in plain English, and get an AI-powered answer grounded in live logs and events.
-
-Underneath all of it, every deployment is committed to a sanctioned Git repository and reconciled onto Kubernetes by Portainer's GitOps engine. Nothing is deployed out of band, nothing bypasses your governance, and administrators retain full visibility over what's running and who deployed it.
-
-## Where to go next
-
-* New to Portainer-Run? Start with [Requirements](requirements.md) and then [Quick Start](quick-start.md).
-* Already running it? Jump to [Using Portainer-Run](https://app.gitbook.com/s/wg4JrAPgL0W0wygwwbaI/user) to explore the interface, or [Architecture](https://app.gitbook.com/s/wg4JrAPgL0W0wygwwbaI/architecture) to understand how it fits together with Portainer.
+* **They run on your platform.** Every product runs on your own Kubernetes, wherever it lives: cloud, on-premises, edge, or air-gapped. Workloads and agent traffic stay inside your boundary.
+* **Portainer Business is the engine.** Both products are delivered as Portainer Business add-ons and use Portainer's GitOps engine to deliver changes to your clusters.
+* **Access comes from Portainer.** There is no separate user store or permissions model to maintain. What a user can see and do is decided by the Portainer RBAC you already manage, and neither product widens anyone's access.
+* **Every change goes through Git.** Deployments from Portainer-Run and changes proposed through Portainer-Command are committed to a Git repository before Portainer applies them, so every change has an author, a diff, and a way back.
+* **AI clients connect over MCP.** Each product exposes a Model Context Protocol (MCP) endpoint, so AI tools such as Claude Code, Claude Desktop, and Cursor can work with it directly, under the same rules as the web interface.

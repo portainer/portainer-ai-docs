@@ -1,23 +1,48 @@
 # Table of contents
 
-* [Welcome to Portainer-Run](README.md)
+* [Welcome to Portainer AI](README.md)
+
+## Portainer-Run <a href="#portainer-run" id="portainer-run"></a>
+
+* [Welcome to Portainer-Run](portainer-run/README.md)
 * [Requirements](requirements.md)
 * [Quick Start](quick-start.md)
 * [Initial configuration](initial-configuration.md)
+* [Using Portainer-Run](user/overview.md)
+  * [Applications](user/applications.md)
+  * [Deploy](user/deploy.md)
+  * [Admin](user/admin/README.md)
+    * [Git Targets](user/admin/git-targets.md)
+    * [Cluster Readiness](user/admin/cluster-readiness.md)
+    * [Settings](user/admin/settings.md)
+  * [Assistant](user/assistant.md)
+  * [MCP](user/mcp.md)
+* [Architecture](architecture/overview.md)
+  * [Roles and RBAC](architecture/roles.md)
 
-## Using Portainer-Run <a href="#user" id="user"></a>
+## Portainer-Command <a href="#portainer-command" id="portainer-command"></a>
 
-* [Overview](user/overview.md)
-* [Applications](user/applications.md)
-* [Deploy](user/deploy.md)
-* [Admin](user/admin/README.md)
-  * [Git Targets](user/admin/git-targets.md)
-  * [Cluster Readiness](user/admin/cluster-readiness.md)
-  * [Settings](user/admin/settings.md)
-* [Assistant](user/assistant.md)
-* [MCP](user/mcp.md)
-
-## Architecture
-
-* [Overview](architecture/overview.md)
-* [Roles and RBAC](architecture/roles.md)
+* [Welcome to Portainer-Command](portainer-command/README.md)
+* [Requirements](portainer-command/requirements.md)
+* [Install](portainer-command/installation.md)
+* [Initial configuration](portainer-command/initial-configuration.md)
+* [Using Portainer-Command](portainer-command/user/overview.md)
+  * [Connect your agent](portainer-command/user/connect-your-agent.md)
+  * [Connect to GitHub](portainer-command/user/connect-to-github.md)
+  * [AI Workspace](portainer-command/user/workspace.md)
+  * [Prompt library](portainer-command/user/prompt-library.md)
+  * [Proposals](portainer-command/user/proposals.md)
+  * [My sessions](portainer-command/user/my-sessions.md)
+* [Administration](portainer-command/admin/README.md)
+  * [Timeline](portainer-command/admin/timeline.md)
+  * [Environments](portainer-command/admin/environments.md)
+  * [Sessions](portainer-command/admin/sessions.md)
+  * [Connections](portainer-command/admin/connections.md)
+  * [Workspaces](portainer-command/admin/workspaces.md)
+  * [Tokens](portainer-command/admin/tokens.md)
+  * [Users](portainer-command/admin/users.md)
+  * [Settings](portainer-command/admin/settings.md)
+* [MCP tools](portainer-command/mcp.md)
+* [Architecture](portainer-command/architecture/overview.md)
+  * [Security model](portainer-command/architecture/security.md)
+* [Known limitations](portainer-command/known-limitations.md)
