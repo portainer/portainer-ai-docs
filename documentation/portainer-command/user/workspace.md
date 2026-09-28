@@ -1,6 +1,6 @@
 # AI Workspace
 
-An AI Workspace is your own private, hosted agent: an OpenCode instance that Portainer-Command runs for you as a pod in your organization's cluster, with a chat page to talk to it. There's nothing to install. It already has Portainer-Command's [tools](../mcp.md), plus `kubectl`, `helm`, and `git`.
+An AI Workspace is your own private, hosted agent: an OpenCode instance that Portainer-Command runs for you as a pod in your organization's cluster, with a chat page to talk to it. There's nothing to install. It already has Portainer-Command's [tools](../architecture/mcp.md), plus `kubectl`, `helm`, and `git`.
 
 A workspace acts as you. It sees the environments you can see, and everything it proposes is attributed to you, exactly like an agent you [connect yourself](connect-your-agent.md).
 
@@ -34,12 +34,12 @@ To start over, click **Clear chat** in the sidebar. This ends the current conver
 
 The **Manage** view shows your workspace's state, where it runs, when it was last seen, and when it expires. Tabs show its **Sessions**, **Proposals**, **Tokens** (model usage and cost), and **Timeline**.
 
-| Action  | What it does                                                                                                                                                                                                                           |
-| ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Stop    | Stops the pod. The workspace keeps its identity, credential, and chat history, and connects back in on its own when started. The agent loses its own memory of the conversation, although you can still see the transcript.       |
-| Start   | Starts a stopped workspace.                                                                                                                                                                                                            |
-| Restart | Restarts the workspace pod.                                                                                                                                                                                                            |
-| Destroy | Ends the workspace for good. There's no confirmation. Its record and transcript stay readable for review, and you can provision a new one.                                                                                            |
+| Action  | What it does                                                                                                                                                                                                                |
+| ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Stop    | Stops the pod. The workspace keeps its identity, credential, and chat history, and connects back in on its own when started. The agent loses its own memory of the conversation, although you can still see the transcript. |
+| Start   | Starts a stopped workspace.                                                                                                                                                                                                 |
+| Restart | Restarts the workspace pod.                                                                                                                                                                                                 |
+| Destroy | Ends the workspace for good. There's no confirmation. Its record and transcript stay readable for review, and you can provision a new one.                                                                                  |
 
 ### Idle workspaces
 

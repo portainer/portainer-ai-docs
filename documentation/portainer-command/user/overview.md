@@ -15,7 +15,7 @@ Portainer-Command's sidebar is organized into three groups. What you see depends
 
 **Manage**
 
-* [**Administration**](../admin/README.md): visible to Portainer administrators only. Covers the timeline, environments, sessions, connections, workspaces, token spend, users, and settings.
+* [**Administration**](../admin/): visible to Portainer administrators only. Covers the timeline, environments, sessions, connections, workspaces, token spend, users, and settings.
 * **Documentation**: the in-app guide, including the **Threat model** page, which documents each threat considered and what stops it.
 
 ## Home
@@ -36,4 +36,4 @@ Until you've completed both setup steps, **Home** also shows a **Before you star
 * **Bring your own agent.** Connect the agent you already use, such as Claude Code, Claude Desktop, or Cursor, to Portainer-Command's MCP server. The agent runs wherever it already runs. Portainer-Command gives it the tools and holds the credentials. See [Connect your agent](connect-your-agent.md).
 * **Use an AI Workspace.** Let Portainer-Command run a hosted agent for you, with a chat page to talk to it. There's nothing to install. See [AI Workspace](workspace.md).
 
-Both go through the same [MCP tools](../mcp.md) and the same rules. Either way, the agent acts as you and can only reach what you can reach in Portainer.
+Both go through the same [MCP tools](../architecture/mcp.md) and the same rules. Either way, the agent acts as you and can only reach what you can reach in Portainer.

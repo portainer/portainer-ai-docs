@@ -19,7 +19,7 @@ Async Edge agents don't hold a tunnel to Portainer, so no credential can reach t
 
 ## Two credentials per agent connection
 
-Agent traffic passes through Portainer's add-on gateway, so each MCP client sends two headers: the instance-wide **transport key** to get past the gateway, and the connection's own **agent token** to identify the user. The **Connect your agent** page generates the configuration for you, so this only matters if you configure a client by hand. See [MCP tools](mcp.md#authentication).
+Agent traffic passes through Portainer's add-on gateway, so each MCP client sends two headers: the instance-wide **transport key** to get past the gateway, and the connection's own **agent token** to identify the user. The **Connect your agent** page generates the configuration for you, so this only matters if you configure a client by hand. See [MCP tools](architecture/mcp.md#authentication).
 
 ## Custom resources aren't readable
 

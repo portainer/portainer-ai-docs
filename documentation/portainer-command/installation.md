@@ -10,7 +10,7 @@ Ensure you meet the [requirements](requirements.md) before installing.
 {% step %}
 ### Install from the add-ons catalog
 
-As a Portainer administrator, open the add-ons catalog in Portainer and install **Portainer-Command** ("Governed AI agents for Kubernetes operations."). For the general add-on install flow, see [Add-ons](https://docs.portainer.io/admin/add-ons) in the Portainer documentation.
+As a Portainer administrator, open the add-ons catalog in Portainer and install **Portainer-Command**. For the general add-on install flow, see [Add-ons](https://docs.portainer.io/admin/add-ons) in the Portainer documentation.
 
 There are no install-time options to set. Everything is configured in Portainer-Command after it's installed.
 {% endstep %}
@@ -30,7 +30,7 @@ Portainer also places a machine credential in the namespace, which Portainer-Com
 {% step %}
 ### Open Portainer-Command
 
-Once the installation is complete, click the switcher icon ![](../.gitbook/assets/switcher-icon.png) in the top left of Portainer, and choose **Portainer-Command**.
+Once the installation is complete, click the switcher icon ![](<../../.gitbook/assets/switcher-icon (1).png>) in the top left of Portainer, and choose **Portainer-Command**.
 
 Portainer-Command uses Portainer's authentication, so you're signed in as your Portainer user. Portainer administrators see the **Administration** section in the sidebar.
 {% endstep %}

@@ -1,11 +1,11 @@
-# Welcome to Portainer-Command
+# Portainer-Command
 
 Portainer-Command is the safe way to put AI agents to work on your Kubernetes fleet. It sits between AI agents and your clusters: agents can read cluster state, but every change they want to make is forced through a Git pull request that a person approves, and Portainer's GitOps engine delivers it.
 
 <a href="architecture/overview.md" class="button secondary" data-icon="buildings">Architecture</a><a href="requirements.md" class="button secondary" data-icon="clipboard-list-check">Requirements</a><a href="installation.md" class="button primary" data-icon="rocket-launch">Install</a>
 
 {% hint style="info" %}
-Portainer-Command is in **beta**. The core feature set is complete and installs from the Portainer add-ons catalog. See [Known limitations](known-limitations.md) for what isn't supported yet.
+The Portainer-Command add-on is currently in **beta**. The core feature set is complete and installs from the Portainer add-ons catalog. See [Known limitations](known-limitations.md) for what isn't supported yet.
 {% endhint %}
 
 ***

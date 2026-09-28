@@ -4,7 +4,7 @@ Portainer-Command installs as an add-on to Portainer Business. Before you instal
 
 ## Portainer Business with add-ons
 
-Portainer-Command is installed from the Portainer add-ons catalog, so you need a Portainer Business installation that supports [add-ons](https://docs.portainer.io/admin/add-ons), with a valid license.
+Portainer-Command is installed from the Portainer add-ons catalog, so you need a [Portainer Business installation](https://docs.portainer.io/start/install) that supports [add-ons](https://docs.portainer.io/admin/add-ons), with a valid license.
 
 ## A Kubernetes environment to install on
 

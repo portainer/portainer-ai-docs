@@ -8,7 +8,7 @@ After you [install](installation.md) Portainer-Command, an administrator needs t
 {% step %}
 ### Check your GitOps sources
 
-Portainer-Command proposes changes into the Git repositories your environments deploy from. Make sure each repository is added as a GitOps source in Portainer, and that it's hosted on GitHub.
+Portainer-Command proposes changes into the Git repositories your environments deploy from. Make sure each repository is added as a GitOps source in Portainer, and that it's hosted on GitHub. View the [Portainer Sources documentation](https://docs.portainer.io/user/app-delivery/sources) for details.
 {% endstep %}
 
 {% step %}

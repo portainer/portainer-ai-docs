@@ -13,13 +13,13 @@ The credential is stored encrypted and never shown again.
 ## Add your credential
 
 1. Under **Setup** in the sidebar, click **Connect to GitHub**.
-2. Enter your **Git username**, for example `octocat`.
+2. Enter your **Git username**.
 3. Leave **Host URL** empty for github.com. Fill it in only for GitHub Enterprise Server.
 4. Enter a **Personal access token** with write access to the repositories behind your environments.
 5. Click **Save credential**.
 
 {% hint style="info" %}
-If you use a fine-grained personal access token, it also needs the **Pull requests: write** permission. Portainer-Command can't check this for you.
+If you use a fine-grained personal access token, it needs the **Pull requests: write** permission. Portainer-Command can't check this for you.
 {% endhint %}
 
 ## Test your access
