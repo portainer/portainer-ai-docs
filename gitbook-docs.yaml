@@ -31,4 +31,4 @@ site:
           hidden: true
           draft: true
           content:
-            directory: ./copy-of-documentation
+            directory: ./portainer-ai-documentation
