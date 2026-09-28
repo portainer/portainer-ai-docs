@@ -18,13 +18,14 @@ site:
             directory: ./documentation
     - type: section
       key: section-2
-      title: Copy of Documentation
-      path: copy-of-documentation
+      title: PortainerAI Documentation
+      path: portainer-ai-documentation
+      description: ""
       icon: book-blank
       children:
         - type: space
           key: space-2
-          title: Copy of Documentation
+          title: PortainerAI Documentation
           path: copy-of-documentation
           default: true
           hidden: true
