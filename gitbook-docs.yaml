@@ -27,6 +27,7 @@ site:
           title: Copy of Documentation
           path: copy-of-documentation
           default: true
+          hidden: true
           draft: true
           content:
             directory: ./copy-of-documentation
