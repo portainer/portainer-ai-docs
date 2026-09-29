@@ -1,6 +1,6 @@
 # MCP tools
 
-Portainer-Command exposes a Model Context Protocol (MCP) server that any MCP-capable agent can connect to, including Claude Code, Claude Desktop, Cursor, Windsurf, and the Portainer-Command built-in [AI Workspace](../user/workspace.md). This page is the reference for how it works. To connect a client, see [Connect your agent](../user/connect-your-agent.md).
+Portainer-Command exposes a Model Context Protocol (MCP) server that any MCP-capable agent can connect to, including Claude Code, Claude Desktop, Cursor, Windsurf, and the Portainer-Command built-in [AI Workspace](../user/workspace/workspace.md). This page is the reference for how it works. To connect a client, see [Connect your agent](../user/connect-your-agent.md).
 
 ## Endpoint
 

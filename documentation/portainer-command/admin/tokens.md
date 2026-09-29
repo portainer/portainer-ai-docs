@@ -4,6 +4,8 @@
 
 The page is read-only.
 
+<figure><img src="../../../.gitbook/assets/tokens.png" alt=""><figcaption></figcaption></figure>
+
 ## Choose a date range
 
 Use the date picker to choose the period. The default is **Last 30 days**. Days are counted in UTC.

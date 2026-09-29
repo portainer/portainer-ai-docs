@@ -66,7 +66,7 @@ If every agent runs inside the cluster, you can leave this empty.
 
 ## AI Workspaces
 
-An [AI Workspace](../user/workspace.md) is a private, hosted agent (an OpenCode instance) that Portainer-Command runs as a pod for each user who wants one. Workspaces keep AI agents off people's own machines and away from the rest of your infrastructure.
+An [AI Workspace](../user/workspace/workspace.md) is a private, hosted agent (an OpenCode instance) that Portainer-Command runs as a pod for each user who wants one. Workspaces keep AI agents off people's own machines and away from the rest of your infrastructure.
 
 Before you can enable workspaces, you need a [Public Portainer address](settings.md#public-portainer-address) and an [Agent gateway transport key](settings.md#agent-gateway-transport-key). Then turn on **Enable AI Workspaces**. The setting saves as soon as you flip it. Portainer-Command checks that it can actually launch a workspace pod, and turns the switch back off if it can't.
 
@@ -78,10 +78,10 @@ The section has four cards, each saved separately.
 
 Where workspace pods run, and the credential that creates them.
 
-| Field/Option                 | Overview                                                                                                                                                                                                                                                                                                   |
-| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Environment                  | The environment workspace pods run in. It must be the same cluster Portainer-Command runs on. See [Known limitations](../known-limitations.md#ai-workspaces-share-portainer-commands-cluster).                                                                                                               |
-| Namespace for workspace pods | The namespace workspace pods run in. We recommend a dedicated namespace. Click **None of these? Create a new namespace…** to create one, for example `ai-workspaces`.                                                                                                                                      |
+| Field/Option                 | Overview                                                                                                                                                                                                                                                                       |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Environment                  | The environment workspace pods run in. It must be the same cluster Portainer-Command runs on. See [Known limitations](../known-limitations.md#ai-workspaces-share-portainer-commands-cluster).                                                                                 |
+| Namespace for workspace pods | The namespace workspace pods run in. We recommend a dedicated namespace. Click **None of these? Create a new namespace…** to create one, for example `ai-workspaces`.                                                                                                          |
 | Provisioning credential      | The Portainer credential used to create and delete workspace pods. This should be a dedicated Portainer user, never the sessions credential and never a person's own. It only starts and stops pods. The agent inside a workspace still acts as the person who provisioned it. |
 
 Click **Create the user and key for me** to have Portainer-Command create a user (`portainer-command-provisioner`) with access to the chosen namespace only, and store its key. On an OAuth or LDAP instance, create a service account in your identity provider, give it access to the namespace, and paste its token instead.
@@ -92,12 +92,12 @@ Click **Test access** to dry-run a workspace create with the stored credential w
 
 What each workspace runs, and when an idle one is stopped.
 
-| Field/Option                                   | Overview                                                                                                                                                                                                                                                                          |
-| ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Workspace image                                | By default, workspaces run the image that ships with this version of the add-on, and follow it across upgrades. Turn on **Use a specific image** to pin a registry, repository, and tag instead. A pinned image stays put across upgrades.                                        |
-| CPU limit                                      | The most CPU one workspace pod may use. Defaults to `2`. Every workspace requests only `100m`, so this is a ceiling rather than a reservation.                                                                                                                                     |
-| Memory limit                                   | The most memory one workspace pod may use. Defaults to `2Gi`. Every workspace requests only `256Mi`. An agent that only reads and proposes is fine with the defaults; one that builds code or runs tests needs more.                                                              |
-| Stop an idle workspace after (minutes)         | Defaults to `120`. An idle workspace is stopped, not destroyed: its identity, credential, and chat history are kept, and its owner can start it again. Sending a prompt or opening the chat resets the clock. Set `0` to let workspaces run until their connection expires. |
+| Field/Option                           | Overview                                                                                                                                                                                                                                                                    |
+| -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Workspace image                        | By default, workspaces run the image that ships with this version of the add-on, and follow it across upgrades. Turn on **Use a specific image** to pin a registry, repository, and tag instead. A pinned image stays put across upgrades.                                  |
+| CPU limit                              | The most CPU one workspace pod may use. Defaults to `2`. Every workspace requests only `100m`, so this is a ceiling rather than a reservation.                                                                                                                              |
+| Memory limit                           | The most memory one workspace pod may use. Defaults to `2Gi`. Every workspace requests only `256Mi`. An agent that only reads and proposes is fine with the defaults; one that builds code or runs tests needs more.                                                        |
+| Stop an idle workspace after (minutes) | Defaults to `120`. An idle workspace is stopped, not destroyed: its identity, credential, and chat history are kept, and its owner can start it again. Sending a prompt or opening the chat resets the clock. Set `0` to let workspaces run until their connection expires. |
 
 Existing workspaces keep their image and size until they are recreated. The idle timeout applies to all of them.
 
@@ -105,11 +105,11 @@ Existing workspaces keep their image and size until they are recreated. The idle
 
 The model every workspace talks to. Choose one provider:
 
-| Provider                   | What you need                                                                                                                                                                       |
-| -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| None                       | No model. Workspaces still provision, but prompts fail. Choose a provider before inviting users.                                                                                    |
-| Anthropic (direct)         | An Anthropic API key. The model is optional; leave it blank to use OpenCode's default.                                                                                              |
-| OpenAI (direct)            | An OpenAI API key and a model ID, such as `gpt-5`. Use this rather than the OpenAI-compatible option for `api.openai.com`.                                                          |
+| Provider                   | What you need                                                                                                                                                                                                        |
+| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| None                       | No model. Workspaces still provision, but prompts fail. Choose a provider before inviting users.                                                                                                                     |
+| Anthropic (direct)         | An Anthropic API key. The model is optional; leave it blank to use OpenCode's default.                                                                                                                               |
+| OpenAI (direct)            | An OpenAI API key and a model ID, such as `gpt-5`. Use this rather than the OpenAI-compatible option for `api.openai.com`.                                                                                           |
 | OpenAI-compatible endpoint | A **Base URL** and a model ID, plus an API key only if the endpoint asks for one. This covers LLM gateways, vLLM, or an Ollama you run yourself at its `/v1` URL. Workspace pods must be able to reach the endpoint. |
 
 Once a key or base URL is entered, you can pick a model from the list the provider offers, or click **Not listed? Type a model id instead…**. Click **Test connection** to send one short prompt with these settings without saving them.
@@ -120,11 +120,11 @@ A workspace reads the provider once, when it's created. Existing workspaces keep
 
 What a workspace may reach on the network. Choose a **Network mode**:
 
-| Mode                     | Overview                                                                                                                                                                                                                                             |
-| ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Allow all                | No restriction. A workspace can reach any address, including your cloud provider's instance metadata endpoint, so a single prompt injection could send its credentials anywhere.                                                                   |
-| Allow some (the default) | Only the domains in **Allowed domains**, plus Portainer-Command, Portainer, and the model endpoint. Allowed services that accept uploads, such as GitHub and container registries, can still receive data sent with another account.                |
-| Block all                | Only Portainer-Command, Portainer, and the model endpoint. The agent can't fetch code, charts, or images from the internet.                                                                                                                          |
+| Mode                     | Overview                                                                                                                                                                                                                             |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Allow all                | No restriction. A workspace can reach any address, including your cloud provider's instance metadata endpoint, so a single prompt injection could send its credentials anywhere.                                                     |
+| Allow some (the default) | Only the domains in **Allowed domains**, plus Portainer-Command, Portainer, and the model endpoint. Allowed services that accept uploads, such as GitHub and container registries, can still receive data sent with another account. |
+| Block all                | Only Portainer-Command, Portainer, and the model endpoint. The agent can't fetch code, charts, or images from the internet.                                                                                                          |
 
 Every mode keeps DNS, Portainer-Command, Portainer, and the model endpoint reachable, and the restricted modes never reach link-local addresses such as cloud instance metadata. The mode is enforced by a NetworkPolicy on each workspace and an egress proxy in the workspace namespace.
 

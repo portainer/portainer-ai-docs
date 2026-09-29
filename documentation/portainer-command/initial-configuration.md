@@ -32,7 +32,7 @@ Open Portainer-Command from the switcher in the top left of Portainer, then go t
 {% step %}
 ### Set the credential for sessions
 
-Go to **Settings** and find **Portainer credential for sessions**. Click **Create the API key for me**, or paste an administrator's access token and click **Save**.
+Go to **Settings** and find **Portainer credential for sessions**. Click **Create the API key for me**, or paste an administrator's [Portainer access token](https://docs.portainer.io/user/account-settings#access-tokens) and click **Save**.
 
 This lets agents request temporary read-only sessions. Without it, agents can still read manifests and propose changes, but can't read live cluster state. See [Settings](admin/settings.md#portainer-credential-for-sessions).
 {% endstep %}
@@ -89,8 +89,8 @@ Store your own GitHub credential, so the pull requests your agent opens are auth
 
 Create a connection for the agent you already use, such as Claude Code or Cursor. See [Connect your agent](user/connect-your-agent.md).
 
-If AI Workspaces are enabled, you can instead go to **Workspace** and click **Provision my workspace**. See [AI Workspace](user/workspace.md).
+If AI Workspaces are enabled, you can instead go to **Workspace** and click **Provision my workspace**. See [AI Workspace](user/workspace/workspace.md).
 {% endstep %}
 {% endstepper %}
 
-You're ready to go. Try a task from the [Prompt library](user/prompt-library.md), or ask your agent to list the environments it can reach.
+You're ready to go. Try a task from the [Prompt library](user/workspace/prompt-library.md), or ask your agent to list the environments it can reach.

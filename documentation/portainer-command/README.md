@@ -16,7 +16,7 @@ Anyone can point an AI agent at `kubectl` today. What most organizations lack is
 
 It helps two kinds of team:
 
-* **Teams that haven't started.** The built-in [AI Workspace](user/workspace.md) is the on-ramp: an agent with nothing to install, a [prompt library](user/prompt-library.md) of real tasks (security audits, image pinning, network policy baselines, RBAC review), and undo on everything. The governance isn't a tax on getting started. It's the reason you're allowed to.
+* **Teams that haven't started.** The built-in [AI Workspace](user/workspace/workspace.md) is the on-ramp: an agent with nothing to install, a [prompt library](user/workspace/prompt-library.md) of real tasks (security audits, image pinning, network policy baselines, RBAC review), and undo on everything. The governance isn't a tax on getting started. It's the reason you're allowed to.
 * **Teams whose engineers already point agents at clusters, officially or not.** Start from the administration side: a fleet-wide [timeline](admin/timeline.md) of all agent activity, per-environment allow and deny, namespace restrictions, per-user token spend, an [emergency halt](admin/environments.md#emergency-halt) for an environment or a user, and one-click revert of any agent change. Don't fight the behavior. Govern it.
 
 ## What Portainer-Command does
@@ -34,7 +34,7 @@ It helps two kinds of team:
 {% step %}
 ### A person sets a goal
 
-A user gives a goal to their [AI Workspace](user/workspace.md), or [connects their own agent](user/connect-your-agent.md), such as Claude Code or Cursor.
+A user gives a goal to their [AI Workspace](user/workspace/workspace.md), or [connects their own agent](user/connect-your-agent.md), such as Claude Code or Cursor.
 {% endstep %}
 
 {% step %}

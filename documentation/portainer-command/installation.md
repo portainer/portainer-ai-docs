@@ -32,6 +32,8 @@ Portainer also places a machine credential in the namespace, which Portainer-Com
 
 Once the installation is complete, click the switcher icon ![](<../../.gitbook/assets/switcher-icon (1).png>) in the top left of Portainer, and choose **Portainer-Command**.
 
+<figure><img src="../../.gitbook/assets/command-menu.png" alt=""><figcaption></figcaption></figure>
+
 Portainer-Command uses Portainer's authentication, so you're signed in as your Portainer user. Portainer administrators see the **Administration** section in the sidebar.
 {% endstep %}
 

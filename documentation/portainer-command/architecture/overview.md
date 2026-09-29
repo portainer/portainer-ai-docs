@@ -19,7 +19,7 @@ Agent (AI Workspace, or your own MCP client)
 Portainer-Command is made of three parts.
 
 1. **An MCP server.** Six tools, none of which can change a cluster. Live state comes from a temporary read-only credential, desired state comes from a `git clone` of the environment's own directory, and the one tool shaped like a write opens a pull request. See [MCP tools](mcp.md).
-2. **AI Workspaces.** A hosted agent per user, run in your own cluster, already connected to the MCP server, with Portainer-Command rendering the chat. See [AI Workspace](../user/workspace.md).
+2. **AI Workspaces.** A hosted agent per user, run in your own cluster, already connected to the MCP server, with Portainer-Command rendering the chat. See [AI Workspace](../user/workspace/workspace.md).
 3. **An administration plane.** Per-environment policy, the approval gate, a fleet-wide timeline, spend tracking, halt, and rollback. See [Administration](../admin/).
 
 ## Reading live state

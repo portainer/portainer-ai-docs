@@ -12,7 +12,7 @@ The add-on installs onto a Kubernetes environment managed by Portainer, running 
 
 * A **default StorageClass**, or one you choose, that can provision an 8 GiB `ReadWriteOnce` volume for Portainer-Command's database. We recommend a StorageClass that encrypts volumes at rest.
 * Enough capacity for Portainer-Command itself, which is small: the add-on requests 50m CPU and 64 MiB of memory, and its database requests 100m CPU and 256 MiB.
-* If you plan to use [AI Workspaces](user/workspace.md), capacity for one pod per active user. Each workspace requests 100m CPU and 256 MiB of memory, with a default limit of 2 CPUs and 2 GiB. Workspaces must run on the same cluster as Portainer-Command. To enforce the workspace [network modes](admin/settings.md#workspace-network), the cluster's CNI must enforce Kubernetes NetworkPolicy.
+* If you plan to use [AI Workspaces](user/workspace/workspace.md), capacity for one pod per active user. Each workspace requests 100m CPU and 256 MiB of memory, with a default limit of 2 CPUs and 2 GiB. Workspaces must run on the same cluster as Portainer-Command. To enforce the workspace [network modes](admin/settings.md#workspace-network), the cluster's CNI must enforce Kubernetes NetworkPolicy.
 
 ## Kubernetes environments managed with GitOps
 
