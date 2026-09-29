@@ -4,13 +4,13 @@ Portainer AI is a family of products for putting AI to work on the Kubernetes pl
 
 This documentation covers two of the products: **Portainer-Run** and **Portainer-Command**.
 
-<a href="documentation/portainer-ai-documentation/" class="button primary" data-icon="rocket-launch">Portainer-Run</a><a href="documentation/portainer-command/" class="button primary" data-icon="terminal">Portainer-Command</a>
+<a href="documentation/portainer-ai-documentation/" class="button primary">Portainer-Run</a><a href="documentation/portainer-command/" class="button primary">Portainer-Command</a>
 
 ***
 
 ## The products
 
-<table data-view="cards"><thead><tr><th></th><th></th><th data-hidden data-card-target data-type="content-ref"></th><th data-hidden data-card-cover data-type="image">Cover image</th></tr></thead><tbody><tr><td><strong>Portainer-Run</strong></td><td>A governed place to run the AI-built apps your people are already building. Business users deploy straight from source, or from an AI coding tool over MCP, without needing to know anything about Kubernetes.</td><td><a href="/broken/pages/M5d8XbFIHaj4gcB50igw">Broken link</a></td><td data-object-fit="fill"><a href=".gitbook/assets/portainer-run.svg">portainer-run.svg</a></td></tr><tr><td><strong>Portainer-Command</strong></td><td>The safe way to put AI agents to work on your Kubernetes fleet. Agents read cluster state through expiring, read-only sessions, and every change they want to make becomes a Git pull request that a person approves.</td><td><a href="documentation/portainer-command/">portainer-command</a></td><td data-object-fit="fill"><a href=".gitbook/assets/favicon.svg">favicon.svg</a></td></tr></tbody></table>
+<table data-view="cards"><thead><tr><th></th><th></th><th data-hidden data-card-target data-type="content-ref"></th><th data-hidden data-card-cover data-type="image">Cover image</th></tr></thead><tbody><tr><td><strong>Portainer-Run</strong></td><td>A governed place to run the AI-built apps your people are already building. Business users deploy straight from source, or from an AI coding tool over MCP, without needing to know anything about Kubernetes.</td><td><a href="documentation/portainer-ai-documentation/">portainer-ai-documentation</a></td><td data-object-fit="fill"><a href=".gitbook/assets/portainer-run.svg">portainer-run.svg</a></td></tr><tr><td><strong>Portainer-Command</strong></td><td>The safe way to put AI agents to work on your Kubernetes fleet. Agents read cluster state through expiring, read-only sessions, and every change they want to make becomes a Git pull request that a person approves.</td><td><a href="documentation/portainer-command/">portainer-command</a></td><td data-object-fit="fill"><a href=".gitbook/assets/favicon.svg">favicon.svg</a></td></tr></tbody></table>
 
 ## Which product do I need?
 
