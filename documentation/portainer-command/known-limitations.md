@@ -27,7 +27,7 @@ A read-only grant covers Kubernetes' built-in resource types. Custom resources, 
 
 ## A proposer can approve their own agent's proposal
 
-An agent has no way to approve a proposal; approval always happens in the Portainer-Command UI. However, there is currently no rule that stops the person whose agent opened a proposal from approving it themselves, as long as they hold the rights to deploy it.
+An agent has no way to approve a proposal; approval always happens in the Portainer-Command UI. However, no rule stops the person whose agent opened a proposal from approving it themselves, as long as they hold the rights to deploy it.
 
 ## AI Workspaces share Portainer-Command's cluster
 

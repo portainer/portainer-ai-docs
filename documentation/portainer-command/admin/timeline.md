@@ -4,7 +4,7 @@
 
 Click any event for its full record.
 
-<figure><img src="../../../.gitbook/assets/command-timeline-1.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/command-timeline-1.png" alt="Timeline activity feed"><figcaption></figcaption></figure>
 
 ## Filter the timeline
 

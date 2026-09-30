@@ -63,7 +63,7 @@ Audits, upgrades, and cleanups that keep an estate honest.
 | Check live state against the git repository    | What's running that Git doesn't describe, and what changed out of band.     |
 | Find deprecated API versions before an upgrade | API versions the next Kubernetes release drops.                             |
 | Namespace hygiene sweep                        | Missing quotas and limit ranges, unlabeled namespaces, and leftover debris. |
-| Snapshot an environment's health right now     | One readable status report.                                                 |
+| Snapshot an environment's health               | One readable status report.                                                 |
 | Audit what would survive a cluster loss        | Which state lives only in the cluster.                                      |
 
-<figure><img src="../../../../.gitbook/assets/command-prompt-library.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../../.gitbook/assets/command-prompt-library.png" alt="Prompt library"><figcaption></figcaption></figure>

@@ -18,9 +18,9 @@ The table shows each workspace's **Owner**, **State**, **Where** it runs (namesp
 | Expired           | The workspace reached the end of its 90-day lifetime.                                                    |
 | Destroyed         | The workspace was destroyed. Its record and transcript remain.                                           |
 
-<figure><img src="../../../.gitbook/assets/Workspace-1.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/Workspace-1.png" alt="Workspaces list"><figcaption></figcaption></figure>
 
-Click a workspace to open it.&#x20;
+Click a workspace to open it.
 
 ## Stop a workspace
 

@@ -11,4 +11,4 @@ Once connected, Portainer-Run's navigation is organized into four areas: **Workl
 * [**Assistant**](assistant.md): a persistent, context-aware chat panel available on every page.
 * [**MCP**](mcp.md): deploy applications directly from Claude Desktop, Claude Code, or any MCP-capable client.
 
-A quick note on what determines what you see: everything in Portainer-Run is governed by the Portainer RBAC role of the account behind your personal access token. Non-admins won't see the Admin section at all. See [Roles and RBAC](../architecture/roles.md) for the full picture.
+What determines what you see: everything in Portainer-Run is governed by the Portainer RBAC role of the account behind your personal access token. Non-admins won't see the Admin section at all. See [Roles and RBAC](../architecture/roles.md) for the full picture.

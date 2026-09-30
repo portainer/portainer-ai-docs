@@ -10,7 +10,7 @@ The table shows each connection's **Owner**, its **Sessions** (active and total)
 
 A **Cleanup pending** state means the connection has ended, but Portainer-Command is still taking back what it held. Portainer-Command keeps retrying until it's done.
 
-<figure><img src="../../../.gitbook/assets/command-connections-1.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/command-connections-1.png" alt="Connections list"><figcaption></figcaption></figure>
 
 ## Connection details
 
@@ -25,7 +25,7 @@ If an AI Workspace uses the connection, you can open the workspace or read its c
 
 Once a connection has ended, a **Teardown** card shows what was cleaned up: its sessions, its Portainer access token, and its workspace.
 
-<figure><img src="../../../.gitbook/assets/comman-connection-details.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/comman-connection-details.png" alt="Connection details"><figcaption></figcaption></figure>
 
 ## Revoke connections
 

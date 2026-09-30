@@ -6,11 +6,11 @@ Deploy is how applications get onto Kubernetes in Portainer-Run. Drop in the fil
 
 **File upload**: upload or drag in the files your AI tool produced. Portainer-Run commits those files to your configured Git target before deploying.
 
-<figure><img src="../../../.gitbook/assets/deploy-upload-files.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/deploy-upload-files.png" alt="File upload deployment form"><figcaption></figcaption></figure>
 
 **Existing Git repository**: instead of uploading files, select a configured [Git target](admin/git-targets.md), branch, and optional subfolder. Portainer-Run fetches the file listing from that repository, detects the runtime, and clones directly from the source repository on every pod start. In this mode, no source files are additionally committed to the manifests repository; only the manifest itself is.
 
-<figure><img src="../../../.gitbook/assets/deploy-git-repo.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/deploy-git-repo.png" alt="Git repository deployment form"><figcaption></figcaption></figure>
 
 ## Runtime detection
 

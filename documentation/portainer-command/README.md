@@ -5,7 +5,7 @@ Portainer-Command is the safe way to put AI agents to work on your Kubernetes fl
 <a href="architecture/overview.md" class="button secondary" data-icon="buildings">Architecture</a><a href="requirements.md" class="button secondary" data-icon="clipboard-list-check">Requirements</a><a href="installation.md" class="button primary" data-icon="rocket-launch">Install</a>
 
 {% hint style="info" %}
-The Portainer-Command add-on is currently in **beta**. The core feature set is complete and installs from the Portainer add-ons catalog. See [Known limitations](known-limitations.md) for what isn't supported yet.
+The Portainer-Command add-on is in **beta**. The core feature set is complete and installs from the Portainer add-ons catalog. See [Known limitations](known-limitations.md) for what isn't supported yet.
 {% endhint %}
 
 ***

@@ -6,7 +6,7 @@
 Every environment is **closed to agents** until an administrator opens it. Each setting is enforced on the server on every MCP call, not just hidden in the interface.
 {% endhint %}
 
-<figure><img src="../../../.gitbook/assets/command-environments-1.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/command-environments-1.png" alt="Environments list"><figcaption></figcaption></figure>
 
 ## The environment list
 
@@ -18,7 +18,7 @@ The list counts an environment as open to agents when it allows live reads or pr
 
 Click an environment to open it. Its page has three tabs: **Agent configuration**, **Live sessions**, and **State history**. The **Emergency halt** button is in the page header.
 
-<figure><img src="../../../.gitbook/assets/command-environments-2.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/command-environments-2.png" alt="Environment configuration tabs"><figcaption></figcaption></figure>
 
 ## Agent configuration
 

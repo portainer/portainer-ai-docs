@@ -13,4 +13,4 @@ The following options are available:
 | Gateway URL       | The URL to the Portainer-Run gateway. This gateway lets AI coding tools send application files directly to Portainer-Run, avoiding file size limitations that may otherwise be applied. |
 | OpenAI model      | Specifies the OpenAI model to use when using OpenAI for the [Assistant](../assistant.md). This field is ignored when using Anthropic as the AI provider.                                |
 
-<figure><img src="../../../../.gitbook/assets/portainer-run-admin-settings.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../../.gitbook/assets/portainer-run-admin-settings.png" alt="Portainer-Run settings"><figcaption></figcaption></figure>

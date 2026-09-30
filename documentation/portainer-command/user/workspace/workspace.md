@@ -41,7 +41,7 @@ The **Manage** view shows your workspace's state, where it runs, when it was las
 | Restart | Restarts the workspace pod.                                                                                                                                                                                                 |
 | Destroy | Ends the workspace for good. There's no confirmation. Its record and transcript stay readable for review, and you can provision a new one.                                                                                  |
 
-<figure><img src="../../../../.gitbook/assets/command-AI-workspace.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../../.gitbook/assets/command-AI-workspace.png" alt="AI Workspace management view"><figcaption></figcaption></figure>
 
 ### Idle workspaces
 

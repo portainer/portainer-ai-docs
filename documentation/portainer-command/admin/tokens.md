@@ -4,7 +4,7 @@
 
 The page is read-only.
 
-<figure><img src="../../../.gitbook/assets/tokens.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/tokens.png" alt="Token usage dashboard"><figcaption></figcaption></figure>
 
 ## Choose a date range
 
