@@ -1,3 +1,3 @@
 # Table of contents
 
-* [Welcome to Portainer AI](README.md)
+* [Portainer AI Documentation](README.md)

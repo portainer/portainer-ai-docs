@@ -1,4 +1,7 @@
 ---
+description: >-
+  All the details you need to run, secure, and govern containers and AI on your
+  own infrastructure.
 layout:
   width: default
   title:
@@ -21,7 +24,7 @@ layout:
     visible: true
 ---
 
-# Welcome to Portainer AI
+# Portainer AI Documentation
 
 Portainer AI is a family of products for putting AI to work on the Kubernetes platforms you already run, under the controls your security team already requires. Each product runs inside your own environment, uses your existing Portainer RBAC, and treats Git as the source of truth for every change it makes.
 
