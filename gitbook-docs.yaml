@@ -1,34 +1,47 @@
 $schema: https://api.gitbook.com/gitbook-docs.yaml
 site:
-  title: Portainer-Run Documentation
+  title: Portainer AI Documentation
   structure:
     - type: section
       key: section-1
-      title: Documentation
+      title: Overview
       path: documentation
-      icon: book-blank
+      description: ""
+      icon: house
       default: true
       children:
         - type: space
           key: space-1
-          title: Documentation
+          title: Overview
           path: documentation
           default: true
           content:
-            directory: ./documentation
+            directory: null
     - type: section
       key: section-2
-      title: PortainerAI Documentation
-      path: portainer-ai-documentation
+      title: Portainer-Command
+      path: portainer-command
       description: ""
-      icon: book-blank
       children:
         - type: space
           key: space-2
-          title: PortainerAI Documentation
-          path: copy-of-documentation
+          title: Portainer AI Documentation
+          path: portainerai-documentation
           default: true
           hidden: true
           draft: true
           content:
-            directory: ./portainer-ai-documentation
+            directory: null
+    - type: section
+      key: section-3
+      title: Portainer-Run
+      path: portainer-run
+      description: ""
+      children:
+        - type: space
+          key: space-3
+          title: Portainer-Run
+          path: documentation
+          default: true
+          content:
+            directory: null
