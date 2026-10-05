@@ -31,7 +31,7 @@ site:
           hidden: true
           draft: true
           content:
-            directory: null
+            directory: ./portainer-command/portainerai-documentation
     - type: section
       key: section-3
       title: Portainer-Run
