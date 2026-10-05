@@ -22,7 +22,7 @@ It helps two kinds of team:
 * **Every action has a person behind it.** An agent acts with its owner's own Portainer credential, and its pull requests are authored with its owner's own Git credential. Portainer-Command never widens anyone's access.
 * **Everything can be undone.** Any proposal can be reverted in one click, and an environment can be rolled back to any past state. Both happen as pull requests, too.
 * **Spend is visible.** Model token usage and cost are tracked per user and per workspace.
-* **The threat model is published.** The in-app **Threat model** page documents each threat considered and what stops it. You can hand it to your security team.
+* **The threat model is published.** It documents each threat considered and what stops it. [Download the threat model (PDF)](https://4731999.fs1.hubspotusercontent-na1.net/hubfs/4731999/portainer-command-threat-model.pdf) to share with your security team, or open the **Threat model** page in Portainer-Command.
 
 ## How a change happens
 

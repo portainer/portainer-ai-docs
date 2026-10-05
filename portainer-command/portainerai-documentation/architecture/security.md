@@ -1,6 +1,10 @@
 # Security model
 
-Portainer-Command is built so that an agent is never more privileged than the person who connected it, never holds a credential that can change a cluster, and leaves an attributable record of everything it does. This page covers how that works. For the full threat-by-threat analysis, open the **Threat model** page under **Documentation** in Portainer-Command. You can download it as a PDF for your security team.
+Portainer-Command is built so that an agent is never more privileged than the person who connected it, never holds a credential that can change a cluster, and leaves an attributable record of everything it does. This page covers how that works.
+
+{% hint style="info" %}
+**Reviewing Portainer-Command with your security team?** [Download the Portainer-Command threat model (PDF)](https://4731999.fs1.hubspotusercontent-na1.net/hubfs/4731999/portainer-command-threat-model.pdf). It covers each threat considered and what stops it, and is written to hand to an application security review. The same content is on the **Threat model** page under **Documentation** in Portainer-Command.
+{% endhint %}
 
 ## Guarantees the architecture makes
 
@@ -40,7 +44,7 @@ Being an administrator doesn't let you approve a change you couldn't deploy. The
 
 ## What Portainer-Command defends against
 
-The threat model considers three adversaries: a prompt-injected agent, a stolen credential, and a legitimate user overreaching. Some of the main threats, and what stops them:
+The threat model considers three adversaries: a prompt-injected agent, a stolen credential, and a legitimate user overreaching. Some of the main threats, and what stops them, are below. For the full analysis, [download the threat model (PDF)](https://4731999.fs1.hubspotusercontent-na1.net/hubfs/4731999/portainer-command-threat-model.pdf).
 
 | Threat                                          | What stops it                                                                                                                                                                |
 | ----------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
