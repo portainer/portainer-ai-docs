@@ -28,7 +28,6 @@ site:
           title: Portainer AI Documentation
           path: portainerai-documentation
           default: true
-          hidden: true
           content:
             directory: ./portainer-command/portainerai-documentation
     - type: section
