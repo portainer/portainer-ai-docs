@@ -29,7 +29,6 @@ site:
           path: portainerai-documentation
           default: true
           hidden: true
-          draft: true
           content:
             directory: ./portainer-command/portainerai-documentation
     - type: section
