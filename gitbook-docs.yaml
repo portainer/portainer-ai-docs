@@ -29,7 +29,7 @@ site:
           path: portainerai-documentation
           default: true
           content:
-            directory: ./portainer-command/portainerai-documentation
+            directory: null
     - type: section
       key: section-3
       title: Portainer-Run
