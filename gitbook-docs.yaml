@@ -18,19 +18,6 @@ site:
           content:
             directory: ./documentation
     - type: section
-      key: section-2
-      title: Portainer-Command
-      path: portainer-command
-      description: ""
-      children:
-        - type: space
-          key: space-2
-          title: Portainer AI Documentation
-          path: portainerai-documentation
-          default: true
-          content:
-            directory: ./portainer-command/portainerai-documentation
-    - type: section
       key: section-3
       title: Portainer-Run
       path: portainer-run
@@ -43,3 +30,16 @@ site:
           default: true
           content:
             directory: ./portainer-run/documentation
+    - type: section
+      key: section-2
+      title: Portainer-Command
+      path: portainer-command
+      description: ""
+      children:
+        - type: space
+          key: space-2
+          title: Portainer AI Documentation
+          path: portainerai-documentation
+          default: true
+          content:
+            directory: ./portainer-command/portainerai-documentation
