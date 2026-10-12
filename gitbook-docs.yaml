@@ -42,4 +42,4 @@ site:
           path: documentation
           default: true
           content:
-            directory: ./portainer/portainer-ai-docs/documentation
+            directory: null
