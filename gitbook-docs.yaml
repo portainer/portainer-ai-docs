@@ -16,7 +16,7 @@ site:
           path: documentation
           default: true
           content:
-            directory: null
+            directory: ./documentation
     - type: section
       key: section-2
       title: Portainer-Command
@@ -29,7 +29,7 @@ site:
           path: portainerai-documentation
           default: true
           content:
-            directory: null
+            directory: ./portainer-command/portainerai-documentation
     - type: section
       key: section-3
       title: Portainer-Run
@@ -42,4 +42,4 @@ site:
           path: documentation
           default: true
           content:
-            directory: null
+            directory: ./portainer-run/documentation
