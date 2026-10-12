@@ -12,14 +12,25 @@ The page has four cards:
 Each credential card shows a **Configured** or **Not set** badge. Stored credentials are never shown again after saving. You can only replace or rotate them.
 
 {% hint style="info" %}
+Any setting on this page can also be supplied as an environment variable of the same name on the Portainer-Command container, such as `AI_WORKSPACES_ENABLED=true`. A value saved here takes precedence. A credential supplied this way isn't encrypted: anyone who can read the Deployment or exec into the pod can read it.
+{% endhint %}
+
+{% hint style="info" %}
 If a warning reading **Portainer refused this add-on's own credential** appears above the cards, the credential Portainer issued to the add-on no longer matches the one Portainer-Command holds. Portainer issues a new one on every install, upgrade, or repair. Repairing the add-on in Portainer reissues it.
 {% endhint %}
 
 ## Portainer credential for sessions
 
-The administrator API key Portainer-Command uses to create and delete the temporary, read-only Portainer users behind agents' [read-only sessions](../../architecture/overview.md#reading-live-state). It isn't used for anything else. Every other Portainer call an agent causes is made as the agent's owner.
+The administrator API key Portainer-Command uses to create and delete the temporary, read-only Portainer users behind agents' [read-only sessions](../../architecture/overview.md#reading-live-state). Portainer-Command uses it only for the steps Portainer reserves to administrators:
 
-Until it's set, `request_environment_access` fails for everybody. Agents can still read environment files and propose changes.
+* Creating and deleting the temporary users, and adding them to the environment's access policy.
+* Creating and removing each grant's read-only RBAC, and checking where the grant can read Secrets.
+* Listing Portainer's users, to find grants to list, revoke, or expire.
+* Listing stacks when a proposal is checked, approved, or merged, because Portainer lists Kubernetes stacks only to administrators.
+
+Every other Portainer call an agent causes is made as the agent's owner, and a grant is still limited to what its owner can already read.
+
+Until it's set, `request_environment_access` fails for everybody, and expired grants aren't cleaned up. Agents can still read environment files and propose changes.
 
 To set it, do one of the following:
 
@@ -114,7 +125,7 @@ The model every workspace talks to. Choose one provider:
 
 Once a key or base URL is entered, you can pick a model from the list the provider offers, or click **Not listed? Type a model id instead…**. Click **Test connection** to send one short prompt with these settings without saving them.
 
-A workspace reads the provider once, when it's created. Existing workspaces keep the provider they started with until they are destroyed and recreated.
+A workspace reads the provider when it starts. Stopping and starting an existing workspace picks up a change.
 
 ### Workspace Network
 

@@ -28,7 +28,7 @@ When the workspace proposes a change, an approval card appears in the chat. If y
 
 For ready-made tasks, use the [Prompt library](prompt-library.md).
 
-To start over, click **Clear chat** in the sidebar. This ends the current conversation and empties the transcript. The transcript is hidden from you but not erased, so administrators can still review it.
+To start over, click **Clear chat** at the bottom left of the message box, then confirm with **Clear chat**. This ends the current conversation and empties the transcript. The transcript is hidden from you but not erased, so administrators can still review it.
 
 ## Manage your workspace
 

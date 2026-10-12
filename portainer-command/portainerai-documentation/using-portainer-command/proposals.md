@@ -79,5 +79,5 @@ To roll a whole environment back to an earlier state, administrators can use [St
 Agents can adopt an upstream Helm chart by vendoring it into the environment's directory. When a proposal adds a new chart, the agent has to declare the namespace the release is installed into.
 
 {% hint style="warning" %}
-Removing a Helm chart doesn't uninstall it. Portainer deletes the chart's stack but leaves the release running, including its CRDs and webhooks. The pull request and the approval both say so, and give you the `helm uninstall` command to finish the job.
+Removing a Helm chart may not uninstall it. Portainer deletes the chart's stack. Portainer 2.45 and later uninstall the release with it; older versions leave the release running, including its CRDs and webhooks. The pull request says which applies and, when the release is left running, gives you the `helm uninstall` command to finish the job.
 {% endhint %}

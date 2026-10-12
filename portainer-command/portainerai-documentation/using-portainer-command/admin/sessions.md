@@ -29,6 +29,6 @@ Click a session to see its full record:
 
 ## Revoke sessions
 
-Click **Revoke** on a session's page, or select several sessions in the table and click **Revoke** in the bar that appears. Revoking takes effect immediately and has no confirmation. Portainer removes the credential's service account and role bindings from the cluster.
+Click **Revoke** on a session's page, or select several sessions in the table and click **Revoke** in the bar that appears. Revoking takes effect immediately and has no confirmation. Portainer-Command removes the session's role bindings from the cluster and deletes the temporary Portainer user behind it.
 
 To end every session on one environment at once, use [Emergency halt](environments.md#emergency-halt).
