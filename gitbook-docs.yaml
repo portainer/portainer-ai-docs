@@ -45,15 +45,15 @@ site:
       children:
         - type: space
           key: space-2
-          title: Portainer-Command 1.0.0
+          title: 1.0.0
           path: portainerai-documentation
           default: true
           content:
             directory: ./portainer-command/portainerai-documentation
         - type: space
           key: space-5
-          title: 1.0.0
-          path: portainer-ai-documentation
+          title: 1.0.1
+          path: 1.0.1
           draft: true
           content:
             directory: ./portainer-command/portainerai-documentation
