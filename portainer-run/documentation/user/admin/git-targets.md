@@ -43,23 +43,15 @@ The **Test** button on each target checks connectivity and reports read and writ
 Regardless of which deploy path is used, Portainer-Run keeps a consistent structure so deployments across environments and namespaces stay cleanly separated within the same repository:
 
 * Manifests: `<env-name>/<namespace>/<appname>.yaml`
-* Source files: `<env-name>/<namespace>/<appname>/src/`&#x20;
-
-## When the Git provider doesn't respond
-
-A call to the Git provider gives up after 20 seconds and reports which host didn't answer. A host that refuses the connection or can't be resolved is reported the same way.
-
-A deploy, source update, edit, or removal has 25 seconds in total to read what it needs before it starts writing. If that runs out, the action fails and tells you nothing was changed. Once it has started writing, it runs to completion. If a write to Git or Portainer times out, the change may still have been applied, so Portainer-Run tells you it may still be finishing. Check the [Applications](../applications.md) list before trying again.
+* Source files: `<env-name>/<namespace>/<appname>/src/`
 
 ## Deleting an application
 
-When an application is removed, its manifest and, for applications deployed from uploaded files, its `<appname>/src/` source folder are deleted from the repository in a single commit. That source folder is the only source Portainer-Run ever deletes. An application deployed from an existing Git repository never has its source files deleted from any repository.
+When an application is removed, its directory is deleted from the repository in a single commit:
 
 * **GitHub** uses the Git Data API tree approach, removing all files under a directory in one commit regardless of file count, matching what the GitHub UI's "Delete directory" button does.
 * **GitLab** uses a batch delete via the commits API.
 * **Gitea** implements the equivalent behavior.
-
-Removing the manifest and source folder in one commit avoids a race between two separate commits to the same branch.
 
 ## Next: Cluster Readiness
 

@@ -57,7 +57,7 @@ The Edit tab covers everything needed to change a running application, organized
 * **Current Deployment**: read-only details of what's currently running, including the runtime image, the start command, the source path, and the branch it was deployed from.
 * **Exposure**: an **Expose Service As** dropdown (NodePort, LoadBalancer, or Ingress) and a **Port** field where relevant. Changes are applied with a **Save Exposure** button that only appears once something has changed.
 * **App Settings**: add, update, or remove environment variables.
-* **Upload updated files**: select a folder, individual files, or a ZIP archive to replace the deployed code with an updated version. A **Commit & Restart** button commits the selected files to the repository and redeploys and restarts the application. This is only available for applications deployed from uploaded files. An application deployed from an existing Git repository is updated by pushing to that repository and then restarting the application.
+* **Upload updated files**: select a folder or individual files to replace the deployed code with an updated version. A **Commit & Restart** button commits the selected files to the repository and redeploys and restarts the application.
 
 ## Default resource allocation
 
@@ -70,9 +70,9 @@ No additional infrastructure is required, but it's worth knowing what can and ca
 | Detected from                                 | Runtime          |
 | --------------------------------------------- | ---------------- |
 | `package.json`                                | Node.js 22       |
-| `requirements.txt` or any `.py` file          | Python 3.13      |
-| `Gemfile` or any `.rb` file                   | Ruby 3.4         |
-| Any `.php` file                               | PHP 8.4 (Apache) |
+| `requirements.txt` or any `.py` file          | Python 3.12      |
+| `Gemfile` or any `.rb` file                   | Ruby 3.3         |
+| Any `.php` file                               | PHP 8.3 (Apache) |
 | Static assets only (HTML/CSS/JS/images/fonts) | nginx            |
 
 Deploy supports single-container applications only, with no build or compile step. Go, Java, Rust, .NET, and any other language requiring compilation are out of scope.

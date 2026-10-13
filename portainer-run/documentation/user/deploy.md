@@ -4,7 +4,7 @@ Deploy is how applications get onto Kubernetes in Portainer-Run. Drop in the fil
 
 ## Two ways to provide source
 
-**File upload**: upload or drag in the files your AI tool produced. You can add a project folder, individual files, or a ZIP archive. ZIP archives are extracted in your browser, and if an archive can't be read, Portainer-Run shows the error rather than dropping the files. Portainer-Run commits the files to your configured Git target before deploying. A single deploy or source update can carry up to 8 MiB of source.
+**File upload**: upload or drag in the files your AI tool produced. Portainer-Run commits those files to your configured Git target before deploying.
 
 <figure><img src="../.gitbook/assets/deploy-upload-files.png" alt=""><figcaption></figcaption></figure>
 
@@ -19,9 +19,9 @@ The runtime is detected from the file structure. Detection runs in priority orde
 | Signal                                                     | Runtime               |
 | ---------------------------------------------------------- | --------------------- |
 | `package.json` present                                     | Node.js 22            |
-| `requirements.txt` present, or any `.py` file              | Python 3.13           |
-| `Gemfile` present, or any `.rb` file                       | Ruby 3.4              |
-| Any `.php` file                                            | PHP 8.4 (Apache)      |
+| `requirements.txt` present, or any `.py` file              | Python 3.12           |
+| `Gemfile` present, or any `.rb` file                       | Ruby 3.3              |
+| Any `.php` file                                            | PHP 8.3 (Apache)      |
 | All files are static assets (HTML, CSS, JS, images, fonts) | nginx                 |
 | No match                                                   | nginx (safe fallback) |
 
@@ -29,18 +29,11 @@ If your uploaded files include a `.env.example`, Portainer-Run detects it and pr
 
 ## What happens on deploy
 
-Up to four init containers run in sequence before the application starts, each conditional on what's needed:
+Three init containers run in sequence before the application starts, each conditional on what's needed:
 
-1. **vibe-web-guard**: present for PHP and static (nginx) applications. Adds a web server rule that refuses requests for any dotfile or dot directory in the web root (such as `.env`, `.git`, or `.htpasswd`), except `/.well-known/`, whatever start command the application uses.
-2. **vibe-sync**: always present. Clones the source files from Git into a PersistentVolume. The repository's `.git` directory is removed before the files are copied, so it never ends up in the application's directory.
-3. **vibe-install**: present for Node.js, Python, Ruby, and PHP. Runs the runtime's dependency installer (`npm install`, `pip install`, `bundle install`, or `composer install`) against the PVC. Skipped entirely for nginx and static deployments.
-4. **vibe-env**: writes a `.env` file to the PVC from the configured environment variables, so the application works whether or not it uses a dotenv library itself. Present only when environment variables are configured, except for static (nginx) applications: nginx would serve a `.env` file, so they never get one, and this step instead removes any `.env` an earlier version left behind.
-
-Every application, including static ones, also receives its environment variables in the container environment.
-
-{% hint style="info" %}
-Applications deployed before these protections were added pick them up the next time they are redeployed.
-{% endhint %}
+1. **vibe-sync**: always present. Clones the source files from Git into a PersistentVolume.
+2. **vibe-install**: present for Node.js, Python, Ruby, and PHP. Runs the runtime's dependency installer (`npm install`, `pip install`, `bundle install`, or `composer install`) against the PVC. Skipped entirely for nginx and static deployments.
+3. **vibe-env**: present only when environment variables are configured. Writes a `.env` file to the PVC so the application works whether or not it uses a dotenv library itself.
 
 None of this requires a build step. Once the init containers finish, the main application container starts against the pre-populated PVC using a stock public runtime image, with a default resource request of 0.1 CPU / 1 GB memory and a limit of 1 CPU / 4 GB memory applied automatically. See [Applications](applications.md) for how to adjust this afterward.
 
@@ -48,12 +41,7 @@ The manifest and (for file-upload deployments) the source files are committed to
 
 ## Updating a deployed app
 
-How you update an application depends on how its source was provided:
-
-* **File upload**: from the application's **Edit** tab, use **Upload updated files** to select a folder, files, or a ZIP archive, then click **Commit & Restart** to commit the change to Git and redeploy.
-* **Existing Git repository**: push your changes to the source repository, then restart the application. The source is cloned when the pod starts, so a restart is what picks up the new commits. **Upload updated files** isn't available for these applications, since Portainer-Run never writes to your source repository.
-
-The PersistentVolume retains its state across pod restarts, so anything the application wrote to disk, including uploaded files and user data, persists through the update. See [Applications](applications.md) for the full Edit tab reference.
+Any update follows the same path as the initial deploy, and is also available directly from an application's **Edit** tab via **Upload updated files**: select a folder or files and click **Commit & Restart** to commit the change to Git and redeploy. Alternatively, push new commits to the source repository directly if you're using Git-source mode; Portainer's GitOps engine picks up the change on its next reconciliation pass. The PersistentVolume retains its state across pod restarts, so anything the application wrote to disk, including uploaded files and user data, persists through the update. See [Applications](applications.md) for the full Edit tab reference.
 
 ## Current limitations
 
