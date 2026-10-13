@@ -44,9 +44,9 @@ User credentials never appear in server logs, and AI API keys never reach the br
 
 At scale, with dozens of clusters and hundreds of workloads, firing individual pod, service, ingress, and node API calls per deployment would saturate both the browser and the Portainer proxy. Portainer-Run avoids this with an aggregated approach:
 
-* The server exposes `/env-status/:envId`, which fans out to Kubernetes in parallel for a single environment (one call each for pods, services, ingresses, and nodes), then aggregates the results into a per-deployment status map (status reason and access URL), cached for 20 seconds keyed by a hash of the token and environment ID.
+* The server exposes `/env-status/:envId`, which fans out to Kubernetes in parallel for a single environment (one call each for pods, services, ingresses, and nodes), then aggregates the results into a per-deployment status map (status reason and access URL), cached for 5 seconds keyed by a hash of the token and environment ID.
 * The browser fires one request per environment rather than one per deployment, with a client-side concurrency limit of 5 simultaneous environment fetches.
-* A resourceVersion fingerprint per environment means that if nothing has changed since the last render, the cached result is applied immediately with no network call at all.
+* A resourceVersion fingerprint per environment means that if nothing has changed since the last render, the cached result is applied immediately with no network call at all. The deployment list also refreshes automatically every 30 seconds.
 
 ## Session cache and data persistence
 

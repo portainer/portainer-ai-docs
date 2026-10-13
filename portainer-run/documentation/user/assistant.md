@@ -9,8 +9,7 @@ The Assistant requires either an Anthropic or OpenAI API be configured in [Setti
 ## What it can do
 
 * **Answer health and performance questions**, automatically fetching diagnostic data (logs, pod conditions, Kubernetes events) before generating a response, rather than asking you to go check those yourself first.
-* **Translate a Docker Compose file into a Portainer-Run deployment.** Paste a compose file directly into the Assistant input and it translates it into Portainer-Run's deployment model, with every service becoming a container in a single pod sharing localhost, shows a preview, and populates the deploy form. Build directives and network aliases are flagged as unmappable, since they don't have a direct equivalent in that model.
-* **Pre-populate the deploy form** from a natural-language description of what you want to deploy.
+* **Point you to Deploy.** If you ask it to deploy something, it directs you to [Deploy](deploy.md) rather than generating deployment configuration, Docker Compose files or container image suggestions.
 * **Detect scale requests** and open the Edit tab on the relevant application, pre-filled with the requested instance count.
 
 ## What it won't do
@@ -21,6 +20,6 @@ The Assistant never executes irreversible operations directly. It routes destruc
 
 Session history is kept in memory only, and is cleared on disconnect. Nothing from an Assistant conversation persists once the session ends.
 
-## AI Analyse on the Logs tab
+## Analyse with AI on the Logs tab
 
-The Assistant's diagnostic-gathering also powers the **AI Analyse** button on an application's Logs tab. See [Applications](applications.md) for how that works when you're looking at a single application rather than chatting generally.
+The Assistant's diagnostic-gathering also powers the **Analyse with AI** button on an application's Logs tab. See [Applications](applications.md) for how that works when you're looking at a single application rather than chatting generally.

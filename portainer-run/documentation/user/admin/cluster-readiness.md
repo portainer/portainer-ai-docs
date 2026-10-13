@@ -12,7 +12,7 @@ For each environment, Cluster Readiness reports on:
 * **Node health**
 * **GPU node availability**
 
-Each check reports a plain-English result, so an administrator doesn't need to interpret raw cluster state to know whether an environment is actually ready for business builders to deploy onto.
+Checks run when you click **Run checks**. Each check reports a plain-English result, so an administrator doesn't need to interpret raw cluster state to know whether an environment is actually ready for business builders to deploy onto.
 
 ## Disabling an environment
 
