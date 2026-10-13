@@ -10,10 +10,10 @@ Every environment is **closed to agents** until an administrator opens it. Each 
 
 ## The environment list
 
-The list shows each environment's **Status** (Up or Down), the **Repository** and branch it deploys from, what **Agents** may do there (**Read access**, **Proposals**, or **Not enabled**), and how many **Live sessions** are held against it. Use the search box, the filter menu, or the summary cards at the top to narrow the list.
+The list shows each environment's **Status** (Up or Down), the **Repository** and branch it deploys from, what **Agents** may do there (**Read access**, **GitOps reads**, **Proposals**, or **Not enabled**), and how many **Live sessions** are held against it. Use the search box, the filter menu, or the summary cards at the top to narrow the list.
 
 {% hint style="info" %}
-The list counts an environment as open to agents when it allows live reads or proposals. An environment that only allows GitOps reads is shown as **Not enabled**.
+The list counts an environment as open to agents when it allows live reads, GitOps reads, or proposals. An environment that only allows GitOps reads is shown as **GitOps reads** and counts as open.
 {% endhint %}
 
 Click an environment to open it. Its page has three tabs: **Agent configuration**, **Live sessions**, and **State history**. The **Emergency halt** button is in the page header.
