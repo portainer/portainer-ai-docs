@@ -33,7 +33,7 @@ site:
         - type: space
           key: space-4
           title: 1.4.1
-          path: portainer-run
+          path: 1.4.1
           draft: true
           content:
             directory: ./portainer-run/documentation
