@@ -46,7 +46,7 @@ site:
         - type: space
           key: space-2
           title: 1.0.0
-          path: portainerai-documentation
+          path: 1.0.0
           default: true
           content:
             directory: ./portainer-command/portainerai-documentation
