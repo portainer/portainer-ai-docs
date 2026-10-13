@@ -8,7 +8,8 @@ You will need a server to install on. We've tested extensively on Ubuntu Server 
 
 * Root / `sudo` access on the server. This level of access is needed to install KubeSolo, Portainer-Run and the dependencies.
 * Internet access from the server. This is to access the install script as well as the upstream binaries.
-* `iptables` and `curl` installed. These are required for KubeSolo and for downloading the installation script.
+* A 64-bit Linux server (x86-64 or ARM64) with `curl` installed. The installer does not support other operating systems or architectures.
+* `iptables` installed. This is required for KubeSolo. `curl` is required for downloading the installation script.
 
 In terms of specs, this will depend on the amount of applications you intend to run. KubeSolo (the Kubernetes distribution that Portainer-Run installs) is designed to consume as few resources as possible, as is Portainer-Run itself, so the majority of your resource will go to your applications.
 

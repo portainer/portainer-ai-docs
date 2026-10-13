@@ -42,12 +42,14 @@ The **Test** button on each target checks connectivity and reports read and writ
 
 Regardless of which deploy path is used, Portainer-Run keeps a consistent structure so deployments across environments and namespaces stay cleanly separated within the same repository:
 
-* Manifests: `<env-name>/<namespace>/<appname>.yaml`
-* Source files: `<env-name>/<namespace>/<appname>/src/`
+* Manifests: `<path prefix>/<env-name>/<namespace>/<appname>.yaml`
+* Source files: `<path prefix>/<env-name>/<namespace>/<appname>/src/`
+
+The environment name is lowercased, with any character other than a letter or number replaced by `-`. The path prefix is the optional one set on the Git target.
 
 ## Deleting an application
 
-When an application is removed, its directory is deleted from the repository in a single commit:
+When you delete an application and tick **Also remove from Git**, its manifest and the source folder Portainer-Run wrote for it are deleted from the repository in a single commit. Applications deployed from an existing Git repository never have source files deleted from that repository.
 
 * **GitHub** uses the Git Data API tree approach, removing all files under a directory in one commit regardless of file count, matching what the GitHub UI's "Delete directory" button does.
 * **GitLab** uses a batch delete via the commits API.

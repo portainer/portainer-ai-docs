@@ -30,7 +30,7 @@ Portainer-Run inherits the RBAC settings from Portainer. The `portainer-run` tea
 {% step %}
 ### Create namespaces
 
-Deployments in Portainer-Run are created in [namespaces](https://docs.portainer.io/user/kubernetes/namespaces) on your Kubernetes cluster. When creating the deployment, the user will choose the namespace to deploy to. The installer script creates an `applications` namespace for users to deploy into and gives the `portainer-run` team access to this namespace. You can also create additional namespaces in Portainer and [configure access to them](https://docs.portainer.io/user/kubernetes/namespaces/access) for your users and teams.
+Deployments in Portainer-Run are created in [namespaces](https://docs.portainer.io/user/kubernetes/namespaces) on your Kubernetes cluster. When creating the deployment, the user will choose the namespace to deploy to. The installer script creates a `portainer-run-apps` namespace for users to deploy into and gives the `portainer-run` team access to this namespace. You can also create additional namespaces in Portainer and [configure access to them](https://docs.portainer.io/user/kubernetes/namespaces/access) for your users and teams.
 {% endstep %}
 {% endstepper %}
 

@@ -18,6 +18,15 @@ Portainer-Run can also be installed as an add-on within an existing Portainer Bu
 
 {% stepper %}
 {% step %}
+### Install target
+
+The installer first asks where to install:
+
+* **Appliance mode**: installs KubeSolo, Portainer Business and Portainer-Run on this server. This is the path described in the rest of this guide. The installer will refuse to continue if the server is already part of a Kubernetes cluster.
+* **BYO mode**: installs onto an existing Kubernetes cluster that you supply a kubeconfig for. The cluster needs an ingress controller and a default StorageClass, and must not already have Portainer installed.
+{% endstep %}
+
+{% step %}
 ### Domain
 
 You will first be asked for the domain you want to use for applications deployed in Portainer-Run. Deployed applications will be given a subdomain of this domain - for example, if your application was called `myapp` and your domain was `apps.mycompany.com` your application's full URL would be `myapp.apps.mycompany.com`.&#x20;
@@ -31,7 +40,7 @@ The installer will check to see whether the domain you provide and the wildcard 
 Next you can choose the SSL certificate to use for your applications. The options are:
 
 * **Self-signed**: Portainer-Run will generate a self-signed certificate for your applications. By default, browsers will display a warning when visiting sites with self-signed certificates.
-* **Let's Encrypt via DNS-01**: Portainer-Run will use Let's Encrypt to generate trusted certificates automatically for your applications. Your DNS records must be with Cloudflare for this option to work, and you must have a Cloudflare API key.
+* **Let's Encrypt via DNS-01**: Portainer-Run will use Let's Encrypt to generate trusted certificates automatically for your applications. Your DNS records must be with Cloudflare for this option to work, and you must have a Cloudflare API token. The installer checks the token against the zone for your domain before continuing.
 * **Custom certificate**: Portainer-Run will use a custom wildcard certificate you provide for your applications. You will need to supply your own certificate and key.
 {% endstep %}
 
@@ -41,19 +50,19 @@ Next you can choose the SSL certificate to use for your applications. The option
 An ingress controller is required to route requests to your applications. Here you can choose which to install.
 
 * **Traefik**: The default option, and works out of the box.&#x20;
-* **Pomerium (coming soon)**: The Pomerium ingress controller provides secure-by-default ingress, and requires an OIDC identity provider in order to handle access control. This option is in development and will be available in a future release.
+* **Pomerium**: The Pomerium ingress controller provides secure-by-default ingress, and requires an OIDC identity provider in order to handle access control. If you choose it, the installer asks for the identity provider's issuer URL, client ID and client secret, and shows the callback URL (`https://authenticate.<your domain>/oauth2/callback`) to register with your provider first. If your identity provider uses a private certificate authority, you can paste the CA certificate as well.
 {% endstep %}
 
 {% step %}
 ### License key
 
-Portainer-Run installs Portainer Business, which requires a license key. If you have a key you can enter it now, otherwise you'll be asked to provide it when accessing Portainer for the first time after the install completes.
+Portainer-Run installs Portainer Business, which requires a license key. If you have a key you can enter it now, otherwise you'll be asked to provide it when accessing Portainer for the first time after the install completes. The key is shown as you type it rather than masked.
 {% endstep %}
 
 {% step %}
 ### Review
 
-Finally, the choices you've made so far will be shown for review. If you need to make any changes, choose **Back to edit** to return to the start.
+Finally, the choices you've made so far will be shown for review. If you need to make any changes, choose **Back to edit** to start over from the domain screen.
 
 If you're ready to proceed, choose **Confirm and install**.
 {% endstep %}
@@ -63,7 +72,7 @@ If you're ready to proceed, choose **Confirm and install**.
 
 The installation process will now begin. Progress across the installation steps will be shown as they happen, and you can expand or collapse items in the list to see detail on each step.
 
-Once the installation completes you'll be provided with the URL for Portainer-Run as well as an admin username and password. Make sure you copy the password (press `p` to reveal the password) as it won't be displayed again.
+Once the installation completes you'll be provided with the URL for Portainer-Run as well as an admin username and password. The password is hidden by default: press `p` to reveal it once the install has finished. It is also saved to `/var/lib/portainer-run-installer/credentials.txt` on the server, so make sure you copy it and store it somewhere safe.
 {% endstep %}
 
 {% step %}

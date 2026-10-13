@@ -18,24 +18,24 @@ The runtime is detected from the file structure. Detection runs in priority orde
 
 | Signal                                                     | Runtime               |
 | ---------------------------------------------------------- | --------------------- |
-| `package.json` present                                     | Node.js 22            |
-| `requirements.txt` present, or any `.py` file              | Python 3.12           |
-| `Gemfile` present, or any `.rb` file                       | Ruby 3.3              |
-| Any `.php` file                                            | PHP 8.3 (Apache)      |
-| All files are static assets (HTML, CSS, JS, images, fonts) | nginx                 |
-| No match                                                   | nginx (safe fallback) |
+| `package.json` or `server.js` present                      | Node.js 22            |
+| `requirements.txt` present, or any `.py` file              | Python 3.13           |
+| Any `.php` file                                            | PHP 8.4 (Apache)      |
+| `Gemfile` present, or any `.rb` file                       | Ruby 3.4              |
+| No match (for example, static HTML, CSS, JS)               | nginx (safe fallback) |
 
-If your uploaded files include a `.env.example`, Portainer-Run detects it and presents an editable list of keys before deploying. Keys matching common secret patterns (`SECRET`, `TOKEN`, `KEY`, `PASSWORD`) are masked in the form.
+If your uploaded files include a `.env.example`, Portainer-Run detects it and presents an editable list of keys before deploying. Keys that look like secrets (for example those containing `PASSWORD`, `SECRET`, `TOKEN`, `API_KEY` or `PRIVATE_KEY`) are masked in the form, and their values are stored in a Kubernetes Secret rather than committed to Git.
 
 ## What happens on deploy
 
-Three init containers run in sequence before the application starts, each conditional on what's needed:
+Up to four init containers run in sequence before the application starts, each conditional on what's needed:
 
-1. **vibe-sync**: always present. Clones the source files from Git into a PersistentVolume.
-2. **vibe-install**: present for Node.js, Python, Ruby, and PHP. Runs the runtime's dependency installer (`npm install`, `pip install`, `bundle install`, or `composer install`) against the PVC. Skipped entirely for nginx and static deployments.
-3. **vibe-env**: present only when environment variables are configured. Writes a `.env` file to the PVC so the application works whether or not it uses a dotenv library itself.
+1. **vibe-web-guard**: present for PHP and nginx only. Configures the web server to refuse requests for dotfiles and dot directories (such as `.env` and `.git`), so they are never served from the web root. `/.well-known/` stays reachable.
+2. **vibe-sync**: always present. Clones the source files from Git into a PersistentVolume. The repository's `.git` directory is removed from the application's directory after the clone.
+3. **vibe-install**: present for Node.js, Python, Ruby, and PHP. Runs the runtime's dependency installer (`npm install`, `pip install`, `bundle install`, or `composer install`) against the PVC. Skipped entirely for nginx and static deployments.
+4. **vibe-env**: present only when environment variables are configured. Writes a `.env` file containing the non-secret variables to the PVC so the application works whether or not it uses a dotenv library itself. Variables that look like secrets are supplied to the application as environment variables only. For nginx deployments no `.env` file is written.
 
-None of this requires a build step. Once the init containers finish, the main application container starts against the pre-populated PVC using a stock public runtime image, with a default resource request of 0.1 CPU / 1 GB memory and a limit of 1 CPU / 4 GB memory applied automatically. See [Applications](applications.md) for how to adjust this afterward.
+None of this requires a build step. Once the init containers finish, the main application container starts against the pre-populated PVC using a stock public runtime image, with a default resource request of 0.1 CPU / 1 GiB memory and a limit of 1 CPU / 4 GiB memory applied automatically. See [Applications](applications.md) for how to adjust this afterward.
 
 The manifest and (for file-upload deployments) the source files are committed to your Git target, and Portainer reconciles the change onto the cluster the same way it does for every deployment. See [Architecture](https://app.gitbook.com/s/ypmd3gtxKLcOeVHnIvOD/architecture) for the full flow, and [Git Targets](admin/git-targets.md) for where things land in the repository.
 
@@ -52,4 +52,4 @@ Any update follows the same path as the initial deploy, and is also available di
 
 ### Deploying without the UI: MCP
 
-Everything Deploy does in the browser is also available through Portainer-Run's [MCP endpoint](mcp.md), so an AI coding tool can deploy an application it just generated without a human ever opening Portainer-Run at all.
+Deploying from uploaded files is also available through Portainer-Run's [MCP endpoint](mcp.md), so an AI coding tool can deploy an application it just generated without a human ever opening Portainer-Run at all. Deploying from an existing Git repository is only available in the browser.

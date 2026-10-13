@@ -1,6 +1,6 @@
 # Admin
 
-The Admin section contains two pages:
+The Admin section contains three pages:
 
 * [**Git Targets**](git-targets.md): manage personal and shared Git repository connections, including the ability to mark targets as shared for all users.
 * [**Cluster Readiness**](cluster-readiness.md): check environments for deployment prerequisites, and enable or disable environments from self-service entirely.

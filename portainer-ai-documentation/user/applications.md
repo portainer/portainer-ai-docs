@@ -10,13 +10,11 @@ Each row shows:
 
 | Column            | What it shows                                                                                                                                                                                                                                                                                                                                 |
 | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Name**          | The application's name.                                                                                                                                                                                                                                                                                                                       |
+| **Name**          | The application's name, with a line underneath showing who deployed it and when (for example "Deployed by alex • 3 days ago").                                                                                                                                                                                                              |
 | **Environment**   | Which Kubernetes environment (cluster) the application runs in.                                                                                                                                                                                                                                                                               |
 | **Project Space** | The Kubernetes namespace the application is deployed into.                                                                                                                                                                                                                                                                                    |
 | **Health**        | A plain-English status: for example "Your app is live and running," or a reason when something's wrong, such as "App keeps crashing (4 restarts)," "Can't download the image," or "No node has enough resources." Transient pod recycling (OOMKilled) is suppressed until three or more restarts, so a single blip doesn't read as a problem. |
-| **Access**        | A clickable address for reaching the application: node IP:nodePort for NodePort, IP:port for LoadBalancer, or the FQDN for Ingress.                                                                                                                                                                                                           |
-| **Deployed**      | When the application was deployed.                                                                                                                                                                                                                                                                                                            |
-| **Deployed by**   | Which user deployed it.                                                                                                                                                                                                                                                                                                                       |
+| **Access**        | A **Launch** link for reaching the application at its Ingress address.                                                                                                                                                                                                           |
 | **Logs**          | A button opening the application's logs directly.                                                                                                                                                                                                                                                                                             |
 | **Restart**       | A button triggering a rolling restart.                                                                                                                                                                                                                                                                                                        |
 
@@ -32,7 +30,7 @@ Clicking any application opens a detail panel. By default, it's kept simple, sho
 | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Overview** | The application's status, its address, and its environment variables. See [Overview](applications.md#overview) below.                                                                                                                                                                                                                                                                                                               |
 | **Metrics**  | CPU and memory sparklines, polled periodically via `metrics.k8s.io`. Requires metrics-server on the cluster.                                                                                                                                                                                                                                                                                                                        |
-| **Logs**     | Streamed or fetched pod logs with severity filtering and text search. The **AI Analyse** button gathers logs, pod conditions, and Kubernetes events and sends them to the configured AI provider for triage. This covers failure modes where no application logs exist yet, such as scheduling failures, image pull errors, or resource constraints, because it reads from events rather than relying solely on application output. |
+| **Logs**     | Streamed or fetched pod logs with severity filtering and text search. The **Analyse with AI** button gathers logs, pod conditions, and Kubernetes events and sends them to the configured AI provider for triage. This covers failure modes where no application logs exist yet, such as scheduling failures, image pull errors, or resource constraints, because it reads from events rather than relying solely on application output. |
 | **Edit**     | Update the application's deployment, exposure, and environment variables, or upload revised code. See [Edit](applications.md#edit) below.                                                                                                                                                                                                                                                                                           |
 
 A **Show technical details** button reveals two further tabs for anyone who needs a deeper level of control:
@@ -55,9 +53,9 @@ The Overview tab is deliberately simple:
 The Edit tab covers everything needed to change a running application, organized into sections:
 
 * **Current Deployment**: read-only details of what's currently running, including the runtime image, the start command, the source path, and the branch it was deployed from.
-* **Exposure**: an **Expose Service As** dropdown (NodePort, LoadBalancer, or Ingress) and a **Port** field where relevant. Changes are applied with a **Save Exposure** button that only appears once something has changed.
+* **Exposure**: **Hostname** and **Ingress class** fields. Applications are always exposed through an Ingress. Changes are applied with the **Save Exposure** button.
 * **App Settings**: add, update, or remove environment variables.
-* **Upload updated files**: select a folder or individual files to replace the deployed code with an updated version. A **Commit & Restart** button commits the selected files to the repository and redeploys and restarts the application.
+* **Upload updated files**: select a folder or individual files to replace the deployed code with an updated version. A **Commit & Restart** button commits the selected files to the repository and redeploys and restarts the application. This isn't available for applications deployed from an existing Git repository: change the files in that repository and restart the application instead.
 
 ## Default resource allocation
 
@@ -69,11 +67,11 @@ No additional infrastructure is required, but it's worth knowing what can and ca
 
 | Detected from                                 | Runtime          |
 | --------------------------------------------- | ---------------- |
-| `package.json`                                | Node.js 22       |
-| `requirements.txt` or any `.py` file          | Python 3.12      |
-| `Gemfile` or any `.rb` file                   | Ruby 3.3         |
-| Any `.php` file                               | PHP 8.3 (Apache) |
-| Static assets only (HTML/CSS/JS/images/fonts) | nginx            |
+| `package.json` or `server.js`                 | Node.js 22       |
+| `requirements.txt` or any `.py` file          | Python 3.13      |
+| Any `.php` file                               | PHP 8.4 (Apache) |
+| `Gemfile` or any `.rb` file                   | Ruby 3.4         |
+| Anything else (for example static HTML/CSS/JS) | nginx            |
 
 Deploy supports single-container applications only, with no build or compile step. Go, Java, Rust, .NET, and any other language requiring compilation are out of scope.
 
