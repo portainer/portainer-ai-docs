@@ -25,9 +25,16 @@ site:
       children:
         - type: space
           key: space-3
-          title: Portainer-Run
+          title: Portainer-Run 1.4.1
           path: documentation
           default: true
+          content:
+            directory: ./portainer-run/documentation
+        - type: space
+          key: space-4
+          title: 1.4.1
+          path: portainer-run
+          draft: true
           content:
             directory: ./portainer-run/documentation
     - type: section
