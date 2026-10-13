@@ -33,11 +33,9 @@ When an agent calls `request_environment_access`, Portainer-Command:
 
 Because the kubeconfig points at Portainer, the agent never holds a cluster credential and never needs a network route to the Kubernetes API server. Portainer's RBAC sits in front of every request, and any write is refused by the cluster itself.
 
-The read scope is carried only in namespaced `Role` and `RoleBinding` objects. The one cluster-scoped pair a grant creates, a `ClusterRole` and `ClusterRoleBinding`, has fixed rules (read on `clusterroles` and `clusterrolebindings`) that no namespace list or setting changes, so nothing in this path can widen access cluster-wide. Revoking a grant, or letting it expire, removes its role bindings and deletes the temporary user, and the token stops working immediately.
+Only namespaced `Role` and `RoleBinding` objects are ever created, so nothing in this path can grant anything cluster-wide. Revoking a grant, or letting it expire, deletes the temporary user. Portainer removes its service account and role bindings from the cluster, and the token stops working immediately.
 
-These steps are made with the [administrator API key](../using-portainer-command/admin/settings.md#portainer-credential-for-sessions), because Portainer reserves them to administrators, but only after Portainer-Command checks, as the requesting user, that they can see the environment.
-
-A sweep runs every 60 seconds to expire and clean up grants, as long as the administrator API key is set. Without it, expired grants stay in Portainer until a key is set again. Each temporary user's expiry is encoded in its username (`command-agent-e<env>-x<epoch>-<random>`), so an administrator who spots one in Portainer's user list can tell what it is and when it will be removed.
+A sweep runs every 60 seconds to expire and clean up grants. Each temporary user's expiry is encoded in its username (`command-agent-e<env>-x<epoch>-<random>`), so an administrator who spots one in Portainer's user list can tell what it is and when it will be removed.
 
 ## Reading and changing desired state
 
@@ -60,7 +58,7 @@ Undoing a proposal is a revert commit, opened as another proposal. Rolling an en
 * **Portainer** holds the temporary credentials behind read-only grants. Anything Portainer holds can still be listed, expired, and revoked even if Portainer-Command's database is lost.
 * **Portainer's add-on config store** holds instance-wide settings.
 * **A Postgres database**, installed alongside Portainer-Command by the same chart with its own persistent volume, holds the history around those credentials (reasons, issue and expiry times, revocations) plus proposals, agent tokens, workspaces, and the timeline.
-* **Credentials Portainer-Command holds itself**, such as users' Git tokens, the Portainer access tokens behind agent tokens, and the credentials stored in Settings, are encrypted at rest (AES-256-GCM) under a key the chart generates and keeps across upgrades.
+* **Credentials Portainer-Command holds itself**, such as users' Git tokens, the Portainer access tokens behind agent tokens, and model provider keys, are encrypted at rest (AES-256-GCM) under a key the chart generates and keeps across upgrades.
 
 Losing the database loses the audit trail, not control of the credentials.
 

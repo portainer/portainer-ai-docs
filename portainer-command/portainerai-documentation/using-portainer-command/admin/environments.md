@@ -10,10 +10,10 @@ Every environment is **closed to agents** until an administrator opens it. Each 
 
 ## The environment list
 
-The list shows each environment's **Status** (Up or Down), the **Repository** and branch it deploys from, what **Agents** may do there (**Read access**, **GitOps reads**, **Proposals**, or **Not enabled**), and how many **Live sessions** are held against it. Use the search box, the filter menu, or the summary cards at the top to narrow the list.
+The list shows each environment's **Status** (Up or Down), the **Repository** and branch it deploys from, what **Agents** may do there (**Read access**, **Proposals**, or **Not enabled**), and how many **Live sessions** are held against it. Use the search box, the filter menu, or the summary cards at the top to narrow the list.
 
 {% hint style="info" %}
-The list counts an environment as open to agents when it allows live reads, GitOps reads, or proposals. **Not enabled** means all three are off.
+The list counts an environment as open to agents when it allows live reads or proposals. An environment that only allows GitOps reads is shown as **Not enabled**.
 {% endhint %}
 
 Click an environment to open it. Its page has three tabs: **Agent configuration**, **Live sessions**, and **State history**. The **Emergency halt** button is in the page header.
@@ -77,7 +77,7 @@ Turning it on puts Secret values into an agent's context the moment it reads one
 
 ### When changes take effect
 
-GitOps reads and proposals are checked again on every request, so a change to them applies at once. The live-read settings (namespaces and Secrets) are read when a credential is issued and built into it. A change to them applies to the next credential an agent asks for. Sessions already running keep what they were issued with until they expire, which is at most eight hours.
+Settings are read when a credential is issued and built into it. A change applies to the next credential an agent asks for. Sessions already running keep what they were issued with until they expire, which is at most eight hours.
 
 When you tighten a setting, revoke live sessions from the **Live sessions** tab to cut them off now, or use [Emergency halt](environments.md#emergency-halt).
 

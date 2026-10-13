@@ -12,7 +12,7 @@ These hold because of how Portainer-Command is built, not because of a setting:
 
 * **An agent can't change a cluster.** No tool changes a cluster, and the kubeconfig a session issues is bound to read-only Kubernetes RBAC. A denied write comes back from the cluster itself.
 * **The only write path is a commit.** A proposal is a pushed branch that becomes a pull request. Git provides the diff, the author, the revert, and the replay.
-* **Every action is attributed to a person.** An agent token is a handle on its owner's own Portainer credential, every Portainer call an agent causes is made as that person (apart from the administrator steps behind read-only grants, which are still bounded by what that person can read), and every pull request is authored with their own Git credential.
+* **Every action is attributed to a person.** An agent token is a handle on its owner's own Portainer credential, every Portainer call an agent causes is made as that person, and every pull request is authored with their own Git credential.
 * **Read scope only narrows.** A session reads only the namespaces that both Portainer lets the owner read and an administrator has opened to agents.
 * **Rollback is Git.** Undoing a proposal or rolling back an environment opens another proposal.
 
@@ -34,13 +34,13 @@ Being an administrator doesn't let you approve a change you couldn't deploy. The
 
 ## Credential lifetimes
 
-| Credential                                                                                                                                                      | Lifetime                                                         | Stored as                  |
-| --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- | -------------------------- |
-| Agent token                                                                                                                                                     | 90 days                                                          | SHA-256 hash               |
-| Read-only session                                                                                                                                               | 60 minutes by default, 8 hours at most. Swept every minute.      | A temporary Portainer user |
-| Git clone credential                                                                                                                                            | 8 hours by default, 24 hours at most. Scoped to one environment. | Hash                       |
-| AI Workspace                                                                                                                                                    | 90 days                                                          | An agent token of its own  |
-| Git credentials, Portainer tokens behind agent tokens, and the credentials stored in Settings (administrator, transport, provisioning, and model provider keys) | Until replaced or removed                                        | Encrypted with AES-256-GCM |
+| Credential                                                                     | Lifetime                                                         | Stored as                  |
+| ------------------------------------------------------------------------------ | ---------------------------------------------------------------- | -------------------------- |
+| Agent token                                                                    | 90 days                                                          | SHA-256 hash               |
+| Read-only session                                                              | 60 minutes by default, 8 hours at most. Swept every minute.      | A temporary Portainer user |
+| Git clone credential                                                           | 8 hours by default, 24 hours at most. Scoped to one environment. | Hash                       |
+| AI Workspace                                                                   | 90 days                                                          | An agent token of its own  |
+| Git credentials, Portainer tokens behind agent tokens, and model provider keys | Until replaced or removed                                        | Encrypted with AES-256-GCM |
 
 ## What Portainer-Command defends against
 
@@ -64,7 +64,7 @@ Some risks are yours to manage:
 * **Data sent to the model provider.** Whatever an agent reads goes to its model. The namespace and Secrets settings are therefore also your data-residency controls.
 * **Hostile changes that stay inside policy.** Reviewers, branch protection, and admission control are the defense. Keep **Allow cluster-scoped objects** off unless you need it.
 * **Misconfigured Portainer RBAC or branch protection.** Portainer-Command inherits both.
-* **Leftover connections.** When someone leaves, revoke their connections or [halt the user](../using-portainer-command/admin/users.md#emergency-halt). Deleting someone's Portainer account doesn't revoke their connections, so revoke them too. Their Git clone credentials stop working within about 30 seconds of the account losing access.
+* **Leftover connections.** When someone leaves, revoke their connections or [halt the user](../using-portainer-command/admin/users.md#emergency-halt). Git clone credentials can outlive a revoked session by a few hours.
 * **The model provider key.** Use a spend-limited key for AI Workspaces, and rotate it.
 
 ## Reporting a vulnerability

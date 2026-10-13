@@ -21,7 +21,7 @@ X-Command-Token: cmd_…   this connection's agent token, for Portainer-Command
 
 The transport key gets the request past Portainer's add-on gateway. It's one key for the whole instance, set by an administrator in [Settings](../using-portainer-command/admin/settings.md#agent-gateway-transport-key), and it identifies nobody. The **agent token** identifies the user. It's created on the **Connect your agent** page, bound to that user's own Portainer credential, stored only as a hash, and expires after 90 days.
 
-Every Portainer call an agent causes is made with its owner's own Portainer access token, so the agent sees exactly what its owner sees. The exceptions are the steps Portainer reserves to administrators, which are made with the [administrator API key](../using-portainer-command/admin/settings.md#portainer-credential-for-sessions): creating and removing the temporary users behind read-only grants and their RBAC, and listings such as users and stacks. A grant is still scoped to what its owner can already read.
+Every Portainer call an agent causes is made with its owner's own Portainer access token, so the agent sees exactly what its owner sees.
 
 ## The tool surface
 
@@ -66,7 +66,7 @@ Sessions last 60 minutes by default, and at most 8 hours. Issued sessions appear
 
 ### revoke\_environment\_access
 
-Hands back a kubeconfig before it expires. This takes effect immediately: Portainer-Command removes the credential's role bindings from the cluster and deletes the temporary Portainer user behind it.
+Hands back a kubeconfig before it expires. This takes effect immediately: Portainer removes the credential's service account and role bindings from the cluster.
 
 ### request\_environment\_repository
 
