@@ -4,6 +4,10 @@ The Portainer-Run installation script installs most of what is needed, but it do
 
 ## A server
 
+{% hint style="info" %}
+The following requirements are for installation using the [quick start installer](quick-start.md). Portainer-Run can also be installed as an add-on within an existing Portainer Business installation on Kubernetes. You can learn more about this approach [in the Portainer documentation](https://docs.portainer.io/admin/add-ons).
+{% endhint %}
+
 You will need a server to install on. We've tested extensively on Ubuntu Server 26.04 LTS but most Linux distributions should suffice. You will need:
 
 * Root / `sudo` access on the server. This level of access is needed to install KubeSolo, Portainer-Run and the dependencies.
