@@ -23,6 +23,10 @@ Portainer-Run derives its own roles from Portainer's: **a user with Role 1 (admi
 
 Everything else, including [Applications](../user/applications.md) and [Deploy](../user/deploy.md), behaves the same for admins and non-admins alike, scoped only by what their token can reach in the underlying cluster.
 
+## Recommended Portainer role for Portainer-Run users
+
+In Portainer, give each Portainer-Run user the **Standard user** role on a namespace of their own, with a resource quota. The Operator and Namespace Operator roles can only restart and scale apps; they can't deploy or edit them. Where a user can view apps but not change them, Portainer-Run says so and points them to their admin for deploy or edit access to that project space.
+
 ## How this plays out through MCP
 
 The [MCP endpoint](../user/mcp.md) enforces exactly the same boundary as the browser UI. A token authenticated over MCP sees the same environments (`list_environments` excludes anything disabled via Cluster Readiness), the same namespaces, and the same Git targets (`list_git_targets` returns the caller's own targets plus any shared ones) that the same user would see logging into the UI directly. There's no separate, looser permission surface for AI coding tools; governance travels with the token, not the client.
