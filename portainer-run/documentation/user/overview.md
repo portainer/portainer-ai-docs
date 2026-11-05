@@ -1,12 +1,14 @@
 # Overview
 
-Once connected, Portainer-Run's navigation is organized into four areas: **Workloads**, **Deploy**, **Admin** (visible to admins only), and the always-available **Assistant** panel (if an Anthropic or OpenAI key has been configured). This section walks through each in turn, plus the **MCP** endpoint for deploying from AI coding tools without touching the UI at all.
+Once connected, Portainer-Run's navigation is organized into five areas: **Workloads**, **Deploy**, **AI agents**, **Admin** (visible to admins only), and the always-available **Assistant** panel (if an Anthropic or OpenAI key has been configured). This section walks through each in turn, plus the **MCP** endpoint for deploying from AI coding tools without touching the UI at all.
 
 * [**Applications**](applications.md): the main operational view and the page you land on after login. Shows status, logs, metrics, and edit controls for everything Portainer-Run has deployed.
 * [**Deploy**](deploy.md): deploy an application straight from AI-generated source files.
+* [**Connect your agent**](mcp.md#connect-your-agent): create a key and connect an AI assistant such as Claude Desktop to Portainer-Run. Available to every user.
 * [**Admin**](admin/): visible only to Portainer admins.
   * [Git Targets](admin/git-targets.md): manage personal and shared repository connections.
   * [Cluster Readiness](admin/cluster-readiness.md): environment health checks and enable/disable controls.
+  * [Runtime updates](admin/runtime-updates.md): redeploy applications on the latest image of their runtime.
   * [Settings](admin/settings.md): for Portainer-Run's configuration.
 * [**Assistant**](assistant.md): a persistent, context-aware chat panel available on every page.
 * [**MCP**](mcp.md): deploy applications directly from Claude Desktop, Claude Code, or any MCP-capable client.

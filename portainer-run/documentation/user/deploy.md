@@ -25,7 +25,21 @@ The runtime is detected from the file structure. Detection runs in priority orde
 | All files are static assets (HTML, CSS, JS, images, fonts) | nginx                 |
 | No match                                                   | nginx (safe fallback) |
 
-If your uploaded files include a `.env.example`, Portainer-Run detects it and presents an editable list of keys before deploying. Keys whose names look like secrets (for example those containing `PASSWORD`, `SECRET`, `TOKEN`, `API_KEY`, `PRIVATE_KEY` or `AUTH`) are masked in the form, and their values are stored in a Kubernetes Secret rather than committed to Git.
+If your uploaded files include a `.env.example`, Portainer-Run detects it and presents an editable list of keys before deploying. Keys whose names look like secrets (for example those containing `PASSWORD`, `SECRET`, `TOKEN`, `API_KEY`, `PRIVATE_KEY` or `AUTH`) are masked in the form. Masking only affects how the value is displayed: every environment variable value is stored in a Kubernetes Secret (`<appname>-app-secrets`) rather than committed to Git, so the manifest in your repository never contains a value.
+
+If the app is an nginx site and your upload contains exactly one HTML file and no `index.html`, Portainer-Run renames that file to `index.html` so nginx serves it at `/`.
+
+## Size
+
+Each application is given a T-shirt size, which sets its CPU and memory. **Small** is the default and fits most apps.
+
+| Size   | CPU requested / limit | Memory requested / limit |
+| ------ | --------------------- | ------------------------ |
+| Small  | 0.1 / 1               | 1 GiB / 4 GiB            |
+| Medium | 0.2 / 2               | 2 GiB / 8 GiB            |
+| Large  | 0.4 / 4               | 4 GiB / 16 GiB           |
+
+Choosing Medium or Large requires a reason, between 10 and 500 characters, explaining why the app needs more than Small. The reason is saved with the app in Git and shown to anyone who views it.
 
 ## What happens on deploy
 
@@ -34,15 +48,17 @@ Up to four init containers run in sequence before the application starts, each c
 1. **vibe-web-guard**: present for PHP and nginx only. Configures the web server to refuse requests for dotfiles and dot directories (such as `.env` and `.git`), so they are never served from the web root. `/.well-known/` stays reachable.
 2. **vibe-sync**: always present. Clones the source files from Git into a PersistentVolume. The repository's `.git` directory is removed from the application's directory after the clone.
 3. **vibe-install**: present for Node.js, Python, Ruby, and PHP. Runs the runtime's dependency installer (`npm install`, `pip install`, `bundle install`, or `composer install`) against the PVC. Skipped entirely for nginx and static deployments.
-4. **vibe-env**: present only when environment variables are configured. Writes a `.env` file containing the non-secret variables to the PVC so the application works whether or not it uses a dotenv library itself. Variables that look like secrets are supplied to the application as environment variables only. For nginx deployments no `.env` file is written.
+4. **vibe-env**: always present. Writes a `.env` file to the PVC from the application's Kubernetes Secret, so the application works whether or not it uses a dotenv library itself. The values are also supplied to the application as environment variables. For nginx deployments no `.env` file is written, and any `.env` left by an earlier version is removed.
 
-None of this requires a build step. Once the init containers finish, the main application container starts against the pre-populated PVC using a stock public runtime image, with a default resource request of 0.1 CPU / 1 GB memory and a limit of 1 CPU / 4 GB memory applied automatically. See [Applications](applications.md) for how to adjust this afterward.
+None of this requires a build step. Once the init containers finish, the main application container starts against the pre-populated PVC using a stock public runtime image, with resources set by the app's [size](deploy.md#size). See [Applications](applications.md) for how to change the size afterward.
 
 The manifest and (for file-upload deployments) the source files are committed to your Git target, and Portainer reconciles the change onto the cluster the same way it does for every deployment. See [Architecture](https://app.gitbook.com/s/GwxJJZcdHkdw08WBsjrl/architecture) for the full flow, and [Git Targets](admin/git-targets.md) for where things land in the repository.
 
 ## Updating a deployed app
 
-Any update follows the same path as the initial deploy, and is also available directly from an application's **Edit** tab via **Upload updated files**: select a folder or files and click **Commit & Restart** to commit the change to Git and redeploy. Alternatively, push new commits to the source repository directly if you're using Git-source mode; Portainer's GitOps engine picks up the change on its next reconciliation pass. The PersistentVolume retains its state across pod restarts, so anything the application wrote to disk, including uploaded files and user data, persists through the update. See [Applications](applications.md) for the full Edit tab reference.
+Any update follows the same path as the initial deploy, and is also available directly from an application's **Edit** tab via **Upload updated files**: select a folder or files and click **Commit & Restart** to commit the change to Git and redeploy. If Portainer can't apply a saved change straight away, Portainer-Run tells you the change is saved in Git and that it applies the next time Portainer checks the app's stack for changes. Alternatively, push new commits to the source repository directly if you're using Git-source mode; Portainer's GitOps engine picks up the change on its next reconciliation pass. The PersistentVolume retains its state across pod restarts, so anything the application wrote to disk, including uploaded files and user data, persists through the update. See [Applications](applications.md) for the full Edit tab reference.
+
+To pull a fresh runtime image, for example after a runtime security release, use **Redeploy** (see [Applications](applications.md#redeploy)). Administrators can redeploy many apps at once from [Runtime updates](admin/runtime-updates.md).
 
 ## Current limitations
 

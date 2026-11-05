@@ -31,7 +31,7 @@ Clicking any application opens a detail panel. By default, it's kept simple, sho
 | **Overview** | The application's status, its address, and its environment variables. See [Overview](applications.md#overview) below.                                                                                                                                                                                                                                                                                                               |
 | **Metrics**  | CPU and memory sparklines, polled periodically via `metrics.k8s.io`. Requires metrics-server on the cluster.                                                                                                                                                                                                                                                                                                                        |
 | **Logs**     | Streamed or fetched pod logs with severity filtering and text search. The **Analyse with AI** button gathers logs, pod conditions, and Kubernetes events and sends them to the configured AI provider for triage. This covers failure modes where no application logs exist yet, such as scheduling failures, image pull errors, or resource constraints, because it reads from events rather than relying solely on application output. |
-| **Edit**     | Update the application's deployment, exposure, and environment variables, or upload revised code. See [Edit](applications.md#edit) below.                                                                                                                                                                                                                                                                                           |
+| **Edit**     | Update the application's deployment, exposure, size, and environment variables, or upload revised code. See [Edit](applications.md#edit) below.                                                                                                                                                                                                                                                                                           |
 
 A **Show technical details** button reveals two further tabs for anyone who needs a deeper level of control:
 
@@ -53,13 +53,20 @@ The Overview tab is deliberately simple:
 The Edit tab covers everything needed to change a running application, organized into sections:
 
 * **Current Deployment**: read-only details of what's currently running, including the runtime image, the start command, the source path, and the branch it was deployed from.
-* **Exposure**: **Hostname** and **Ingress class** fields. Applications are always exposed through an Ingress. Changes are applied with the **Save Exposure** button.
-* **App Settings**: add, update, or remove environment variables.
+* **Exposure**: **Hostname** and **Ingress class** fields. Applications are always exposed through an Ingress. The hostname must be a full hostname such as `myapp.example.com`, with no scheme, port, or path, using lowercase letters, numbers, and hyphens. Changes are applied with the **Save Exposure** button.
+* **Size**: the application's [size](deploy.md#size). Choosing Medium or Large requires a reason. Apply the change with **Save Size**, which restarts the application.
+* **App Settings**: add, update, or remove environment variables. Values are stored in the application's Kubernetes Secret, and **Save Settings** restarts the application straight away. You need permission to read and write Secrets in the application's namespace.
 * **Upload updated files**: select a folder or individual files to replace the deployed code with an updated version. A **Commit & Restart** button commits the selected files to the repository and redeploys and restarts the application. This isn't available for applications deployed from an existing Git repository: change the files in that repository and restart the application instead.
 
-## Default resource allocation
+### Redeploy
 
-Every application deployed through Portainer-Run receives a default resource request and limit automatically: **0.1 CPU / 1 GiB memory requested, 1 CPU / 4 GiB memory as the limit.** This is applied without any input needed at deploy time. An administrator can adjust it afterward from within Portainer if a workload needs more or less.
+**Redeploy** restarts the application on a freshly pulled image of its runtime, for example after a runtime security release. Unlike **Restart**, which reuses the image already cached on the node, Redeploy commits a change to the application's manifest in Git so the new pods pull the image again. It appears in the page header after you select **Show technical details**.
+
+Redeploy needs edit access to the application, and is only available for applications deployed through Portainer-Run. If you are the person who last deployed or updated the application, Portainer applies the change straight away. Otherwise it's applied the next time Portainer applies the application's stack from Git. Administrators can redeploy many applications at once from [Runtime updates](admin/runtime-updates.md).
+
+## Resource allocation
+
+Every application receives a resource request and limit based on its [size](deploy.md#size). **Small**, the default, requests 0.1 CPU / 1 GiB memory with a limit of 1 CPU / 4 GiB memory. Medium and Large are two and four times that. The size can be changed afterward from the **Edit** tab.
 
 ## Supported application types
 

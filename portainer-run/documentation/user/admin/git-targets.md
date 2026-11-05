@@ -18,6 +18,7 @@ Each target stores:
 * **Git username** and **Personal Access Token** or **SSH private key** (depending on your choice of **Authentication**), encrypted at rest using the encryption key provided during initial configuration. This key must remain identical across every Portainer-Run deploy, or stored targets become unreadable.
 * A **default branch**.
 * An optional **path prefix**.
+* **Skip TLS verification**, shown only when the target has a custom server URL. Leave it off unless the Git server's certificate is self-signed or from an internal CA. It is off by default. Your token crosses this connection, so an attacker on the network path could intercept it while this is on, and a certificate from a public CA, such as Let's Encrypt, is the safer choice. The setting applies to that target only: Portainer-Run's calls to the Git server, the clone of an app's source, and the stack Portainer uses to pull the manifests each follow the setting of the target they use. A stack created by an earlier release keeps skipping verification until you untick it in the stack's Git settings in Portainer, or delete and redeploy the app.
 * Whether the GIt target is a **Shared target** (ie, available to other Portainer-Run users or just the user that created it).
 
 <figure><img src="../../.gitbook/assets/git-target-add.png" alt=""><figcaption></figcaption></figure>
