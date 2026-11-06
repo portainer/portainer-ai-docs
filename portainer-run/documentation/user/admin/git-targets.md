@@ -15,7 +15,7 @@ Each target stores:
 * **Provider**: GitHub, GitLab, Gitea, or Other, and an optional server URL.
 * **Authentication** method - Personal Access Token or SSH Key.
 * **Repository**, in `owner/repo` form.
-* **Git username** and **Personal Access Token** or **SSH private key** (depending on your choice of **Authentication**), encrypted at rest using the encryption key provided during initial configuration. This key must remain identical across every Portainer-Run deploy, or stored targets become unreadable.
+* **Git username** and **Personal Access Token** or **SSH private key** (depending on your choice of **Authentication**), encrypted at rest using the encryption key provided during initial configuration. This key must remain identical across every Portainer-Run deploy, or stored targets become unreadable. See [Recovering targets after a key change](git-targets.md#recovering-targets-after-a-key-change).
 * A **default branch**.
 * An optional **path prefix**.
 * **Skip TLS verification**, shown only when the target has a custom server URL. Leave it off unless the Git server's certificate is self-signed or from an internal CA. It is off by default. Your token crosses this connection, so an attacker on the network path could intercept it while this is on, and a certificate from a public CA, such as Let's Encrypt, is the safer choice. The setting applies to that target only: Portainer-Run's calls to the Git server, the clone of an app's source, and the stack Portainer uses to pull the manifests each follow the setting of the target they use. A stack created by an earlier release keeps skipping verification until you untick it in the stack's Git settings in Portainer, or delete and redeploy the app.
@@ -38,6 +38,18 @@ Keep the provider set to **GitLab** and enter your server host in the GitLab ser
 ## Testing a target
 
 The **Test** button on each target checks connectivity and reports read and write permissions. For GitHub, this uses the collaborator permissions API, which works correctly with fine-grained PATs.
+
+### Recovering targets after a key change
+
+Git targets deleted because of a key change are not lost. When you continue with a new key, Portainer-Run first copies each target it deletes into the `connections_orphaned` table in `data/portainer-run.db`. The same happens on the first start after upgrading from 1.3, if a key change had already been acknowledged.
+
+To get the targets back, restore the key that encrypted them in Portainer, copy the rows back, and restart the pod:
+
+```bash
+kubectl exec -n <namespace> <run-pod> -- node -e "const db = new (require('node:sqlite').DatabaseSync)('/app/data/portainer-run.db'); db.exec('INSERT OR IGNORE INTO connections SELECT id, name, type, encrypted_payload, owner_id, shared, created_at FROM connections_orphaned; DELETE FROM connections_orphaned WHERE id IN (SELECT id FROM connections)')"
+```
+
+Targets created under the key you just replaced will then show as unreadable. You can recover them the same way.
 
 ## Where things land in the repository
 

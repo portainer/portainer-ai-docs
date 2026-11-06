@@ -1,6 +1,7 @@
 # Table of contents
 
 * [Welcome to Portainer-Run](README.md)
+* [Release Notes](release-notes.md)
 * [Requirements](requirements.md)
 * [Quick Start](quick-start.md)
 * [Initial configuration](initial-configuration.md)
