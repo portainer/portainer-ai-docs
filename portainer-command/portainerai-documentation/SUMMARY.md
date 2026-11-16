@@ -1,6 +1,7 @@
 # Table of contents
 
 * [Welcome to Portainer-Command](README.md)
+* [Release Notes](release-notes.md)
 * [Install](installation.md)
 * [Initial configuration](initial-configuration.md)
 * [Requirements](requirements.md)
