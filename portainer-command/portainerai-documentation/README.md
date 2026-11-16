@@ -1,6 +1,6 @@
 # Welcome to Portainer-Command
 
-Portainer-Command is the safe way to put AI agents to work on your Kubernetes fleet. It sits between AI agents and your clusters: agents can read cluster state, but every change they want to make is forced through a Git pull request that a person approves, and Portainer's GitOps engine delivers it.
+Portainer-Command is the safe way to put AI agents to work on your Kubernetes fleet. It sits between AI agents and your clusters: agents can read cluster state, but every change they want to make is forced through a Git change request that a person approves, and Portainer's GitOps engine, Argo CD, or Flux delivers it.
 
 <a href="architecture/overview.md" class="button secondary" data-icon="buildings">Architecture</a><a href="requirements.md" class="button secondary" data-icon="clipboard-list-check">Requirements</a><a href="installation.md" class="button primary" data-icon="rocket-launch">Install</a>
 
@@ -17,10 +17,10 @@ It helps two kinds of team:
 
 ## What Portainer-Command does
 
-* **Agents can't change a cluster directly.** There is no tool that writes to a cluster. The only write path is a commit: an agent pushes a branch, Portainer-Command turns it into a pull request, and a person who could deploy the change themselves approves it.
+* **Agents can't change a cluster directly.** There is no tool that writes to a cluster. The only write path is a commit: an agent pushes a branch, Portainer-Command turns it into a change request on your Git host, and a person who could deploy the change themselves approves it.
 * **Reads are scoped and expire.** An agent asks for a read-only kubeconfig for one environment. It only reaches the namespaces that both Portainer lets the user read and an administrator has opened to agents, and it expires on its own.
-* **Every action has a person behind it.** An agent acts with its owner's own Portainer credential, and its pull requests are authored with its owner's own Git credential. Portainer-Command never widens anyone's access.
-* **Everything can be undone.** Any proposal can be reverted in one click, and an environment can be rolled back to any past state. Both happen as pull requests, too.
+* **Every action has a person behind it.** An agent acts with its owner's own Portainer credential, and its change requests are authored with its owner's own Git credential. Portainer-Command never widens anyone's access.
+* **Everything can be undone.** Any proposal can be reverted in one click, and an environment can be rolled back to any past state. Both happen as proposals, too.
 * **Spend is visible.** Model token usage and cost are tracked per user and per workspace.
 * **The threat model is published.** It documents each threat considered and what stops it. [Download the threat model (PDF)](https://4731999.fs1.hubspotusercontent-na1.net/hubfs/4731999/portainer-command-threat-model.pdf) to share with your security team, or open the **Threat model** page in Portainer-Command.
 
@@ -42,7 +42,7 @@ The agent reads live state through a scoped, read-only kubeconfig, and desired s
 {% step %}
 ### The agent proposes a change
 
-The agent pushes a branch and opens a proposal. Portainer-Command opens a pull request, authored by the person whose agent made it.
+The agent pushes a branch and opens a proposal. Portainer-Command opens a change request, such as a pull request, authored by the person whose agent made it.
 {% endstep %}
 
 {% step %}
@@ -54,7 +54,7 @@ On the [Proposals](using-portainer-command/proposals.md) page, someone who holds
 {% step %}
 ### Portainer delivers it
 
-Approving merges the pull request, and Portainer GitOps delivers the change to the environment.
+Approving merges the change request, and Portainer GitOps, Argo CD, or Flux delivers the change to the environment.
 {% endstep %}
 {% endstepper %}
 
@@ -67,5 +67,5 @@ Portainer-Command assumes GitOps is the source of truth for the environments it 
 ## Where to go next
 
 * New to Portainer-Command? Start with [Requirements](requirements.md), then [Install](installation.md) and [Initial configuration](initial-configuration.md).
-* Setting up as a user? Go to [Connect your agent](using-portainer-command/connect-your-agent.md) and [Connect to GitHub](using-portainer-command/connect-to-github.md).
+* Setting up as a user? Go to [Connect your agent](using-portainer-command/connect-your-agent.md) and [Connect your Git host](using-portainer-command/connect-to-github.md).
 * Want to understand the guarantees? Read [Architecture](architecture/overview.md) and [Security model](architecture/security.md).

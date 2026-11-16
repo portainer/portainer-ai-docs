@@ -1,6 +1,6 @@
 # MCP tools
 
-Portainer-Command exposes a Model Context Protocol (MCP) server that any MCP-capable agent can connect to, including Claude Code, Claude Desktop, Cursor, Windsurf, and the Portainer-Command built-in [AI Workspace](../using-portainer-command/workspace/workspace.md). This page is the reference for how it works. To connect a client, see [Connect your agent](../using-portainer-command/connect-your-agent.md).
+Portainer-Command exposes a Model Context Protocol (MCP) server that any MCP-capable agent can connect to, including Claude Code, Cursor, Windsurf, and the Portainer-Command built-in [AI Workspace](../using-portainer-command/workspace/workspace.md). This page is the reference for how it works. To connect a client, see [Connect your agent](../using-portainer-command/connect-your-agent.md).
 
 ## Endpoint
 
@@ -19,7 +19,7 @@ X-API-Key:       ptr_…   the instance's shared transport key, for Portainer's 
 X-Command-Token: cmd_…   this connection's agent token, for Portainer-Command
 ```
 
-The transport key gets the request past Portainer's add-on gateway. It's one key for the whole instance, set by an administrator in [Settings](../using-portainer-command/admin/settings.md#agent-gateway-transport-key), and it identifies nobody. The **agent token** identifies the user. It's created on the **Connect your agent** page, bound to that user's own Portainer credential, stored only as a hash, and expires after 90 days.
+The transport key gets the request past Portainer's add-on gateway. It's one key for the whole instance, set by an administrator in [Settings](../using-portainer-command/admin/settings.md#agent-gateway-transport-key), or created automatically when an administrator adds the first connection on a Portainer that uses internal authentication. It identifies nobody. The **agent token** identifies the user. It's created on the **Connect your agent** page, bound to that user's own Portainer credential, stored only as a hash, and expires after 90 days.
 
 Every Portainer call an agent causes is made with its owner's own Portainer access token, so the agent sees exactly what its owner sees.
 
@@ -32,9 +32,9 @@ There are six tools, and none of them can change a cluster.
 | `list_environments`              | Read-only | Lists the Kubernetes environments you can reach, their status, and what each allows. |
 | `request_environment_access`     | Issues    | Gets a temporary, read-only kubeconfig for one environment.                          |
 | `revoke_environment_access`      | Revokes   | Hands a kubeconfig back before it expires.                                           |
-| `request_environment_repository` | Issues    | Gets a clone URL and short-lived credential for the environment's manifests.         |
-| `open_environment_proposal`      | Proposes  | Turns a pushed branch into one pull request for a person to review.                  |
-| `list_environment_proposals`     | Read-only | Lists what became of the proposals opened for an environment.                        |
+| `request_environment_repository` | Issues    | Gets a clone URL and short-lived credential for the environment's manifests, or for the files that deploy a live object. |
+| `open_environment_proposal`      | Proposes  | Turns a pushed branch into one change request for a person to review.                |
+| `list_environment_proposals`     | Read-only | Lists what became of the proposals you opened for an environment.                    |
 
 The tool surface is small on purpose. Every tool added is a tool an agent could misuse and a reviewer has to reason about. Rather than a tool for each kind of Kubernetes resource, an agent reads live state with a read-only kubeconfig and the Kubernetes API it already knows.
 
@@ -45,7 +45,7 @@ Lists the environments the agent's owner can reach in Portainer, not the whole i
 | Capability             | Tool it enables                  | Set by                                                              |
 | ---------------------- | -------------------------------- | ------------------------------------------------------------------- |
 | Read live              | `request_environment_access`     | **Allow agents to read live state**                                 |
-| Read GitOps            | `request_environment_repository` | **Allow agents to read GitOps state**, plus a configured repository |
+| Read GitOps            | `request_environment_repository` | **Allow agents to read GitOps state**                               |
 | Propose GitOps changes | `open_environment_proposal`      | **Allow agents to propose changes to GitOps state**                 |
 
 When all three are off, the environment is closed to agents. Async Edge environments report `liveAccess: unavailable-async-edge`, because they can't be read live.
@@ -58,39 +58,46 @@ What a credential can read:
 
 * Only the namespaces in the intersection of what Portainer lets the owner read and what an administrator has opened to agents. Reads are per namespace. List namespaces, then iterate.
 * No system namespaces, unless an administrator names one exactly.
+* On Portainer older than 2.45.2, `default` may be readable outside the grant unless Portainer restricts it, and the result says so. On 2.45.2 or 3.0, no RBAC objects either.
 * Only the one environment it was issued for.
 * No Secrets, unless an administrator has allowed them. The result tells the agent about any namespace where Secrets are readable anyway. See [Secrets](../using-portainer-command/admin/environments.md#secrets).
 * No custom resources.
 
-Sessions last 60 minutes by default, and at most 8 hours. Issued sessions appear on [My sessions](../using-portainer-command/my-sessions.md).
+Sessions last 60 minutes by default, at most 8 hours, and never past the agent connection's expiry. Issued sessions appear on [My sessions](../using-portainer-command/my-sessions.md).
 
 ### revoke\_environment\_access
 
-Hands back a kubeconfig before it expires. This takes effect immediately: Portainer removes the credential's service account and role bindings from the cluster.
+Hands back a kubeconfig before it expires. The kubeconfig stops working at once, and its service account and role bindings are removed from the cluster. If Portainer can't complete the revoke, the answer is `pending`: the kubeconfig keeps working until Portainer-Command's retry, every minute, gets through or it expires.
 
 ### request\_environment\_repository
 
 Returns an authenticated Git clone URL, a short-lived credential, and the exact clone command to run. The repository is served by Portainer-Command. It's a filtered view that holds only the directory an administrator configured for the environment, rooted at that directory, with recent history. Nothing outside the directory exists in it.
 
+Given a live object (`apiVersion`, `kind`, `namespace`, `name`) or a target, it instead serves only the files that deploy that object, from the repository its Portainer stack, edge stack, GitOps workflow deployment, Argo CD Application, or Flux object deploys from. A stack that isn't in Git comes with instructions to adopt it into the environment's own repository, and anything managed elsewhere, such as a plain Helm release or an operator, is refused with its owner named. See [Proposing into what's already deployed](../using-portainer-command/proposals.md#proposing-into-whats-already-deployed).
+
 The agent works with ordinary Git: clone, edit, commit to a feature branch, and push. Pushing to the main branch is refused, and a pushed branch deploys nothing until the agent calls `open_environment_proposal`. To bring in an upstream manifest or Helm chart, the agent downloads it into its clone and commits it.
 
 ### open\_environment\_proposal
 
-Turns a pushed branch into a pull request for a person to review. It doesn't touch the cluster. The branch's net change against the main branch becomes one commit, authored with the owner's own Git credential, against the real GitOps repository.
+Turns a pushed branch into a change request for a person to review: a pull or merge request on the Git host, or, on a plain Git server, one in Portainer-Command. It doesn't touch the cluster. The branch's net change against the main branch becomes one commit, authored with the owner's own Git credential, against the real GitOps repository.
 
 Portainer-Command re-checks the environment's policy first, and refuses the proposal with a reason if:
 
 * Proposals aren't allowed on the environment.
-* A change targets a namespace outside the allowlist.
+* A change targets a namespace outside the allowlist, or a system namespace the allowlist doesn't name.
+* The change also deploys to another environment whose policy doesn't allow it.
+* A pushed file changed on the base branch since the agent cloned it.
 * A file outside a vendored Helm chart isn't a YAML manifest, or a document has no `kind`.
 * The change includes a cluster-scoped object and the environment doesn't allow them.
 * The branch adds a new Helm chart without declaring the namespace its release is installed into.
+
+If a new manifest declares objects already running outside Git, the result is an adoption proposal instead, which writes them to Git as they run. The agent asks its owner to approve it, then proposes its change again on top.
 
 The proposal then appears on the [Proposals](../using-portainer-command/proposals.md) page.
 
 ### list\_environment\_proposals
 
-Lists what became of the pull requests opened for an environment: still open, approved and deployed, rejected, or merged but failed, with the reviewer's reason when there is one. Agents are told to check this rather than assume a proposal landed.
+Lists what became of the proposals you opened for an environment: still open, approved and deployed, rejected, or merged but failed, with the reviewer's reason when there is one. Agents are told to check this rather than assume a proposal landed.
 
 ## Verifying the endpoint
 

@@ -8,7 +8,7 @@ After you [install](installation.md) Portainer-Command, an administrator needs t
 {% step %}
 ### Check your GitOps sources
 
-Portainer-Command proposes changes into the Git repositories your environments deploy from. Make sure each repository is added as a GitOps source in Portainer, and that it's hosted on GitHub. View the [Portainer Sources documentation](https://docs.portainer.io/user/app-delivery/sources) for details.
+Portainer-Command proposes changes into the Git repositories your environments already deploy from: your Portainer stacks' and edge stacks' repositories, and, if you allow it, the ones Argo CD and Flux deploy from. To give agents a home for new manifests on an environment, add that repository as a GitOps source in Portainer. It can be on GitHub, GitLab, Azure DevOps, Bitbucket, or another Git server. View the [Portainer Sources documentation](https://docs.portainer.io/user/app-delivery/sources) for details.
 {% endstep %}
 
 {% step %}
@@ -20,7 +20,7 @@ Portainer-Command has no permissions model of its own. An agent sees exactly wha
 {% step %}
 ### Optional: restrict the default namespace
 
-Portainer grants every user read access to Secrets in an unrestricted default namespace, and Portainer-Command can't take that back. If agents shouldn't be able to read Secrets there, turn on **Restrict access to the default namespace** in each environment's Kubernetes settings. See [Secrets](using-portainer-command/admin/environments.md#secrets).
+On Portainer older than 2.45.2, Portainer lets every user read an unrestricted default namespace, including Secrets, and a read-only session inherits that even if you haven't opened `default` to agents. If agents shouldn't be able to read it, turn on **Restrict access to the default namespace** in each environment's Kubernetes settings. See [Secrets](using-portainer-command/admin/environments.md#secrets).
 {% endstep %}
 {% endstepper %}
 
@@ -32,9 +32,9 @@ Open Portainer-Command from the switcher in the top left of Portainer, then go t
 {% step %}
 ### Set the credential for sessions
 
-Go to **Settings** and find **Portainer credential for sessions**. Click **Create the API key for me**, or paste an administrator's [Portainer access token](https://docs.portainer.io/user/account-settings#access-tokens) and click **Save**.
+Go to **Settings** and find the administrator key card. It's called **Service account** on Portainer 2.45.2 or 3.0, and **Portainer credential for sessions** on older Portainer. Click **Create the API key for me**, or paste an administrator's [Portainer access token](https://docs.portainer.io/user/account-settings#access-tokens) and click **Save**.
 
-This lets agents request temporary read-only sessions. Without it, agents can still read manifests and propose changes, but can't read live cluster state. See [Settings](using-portainer-command/admin/settings.md#portainer-credential-for-sessions).
+On Portainer 2.45.2 or 3.0, Portainer-Command uses it for background work, such as delivering approved changes and redeploying an Edge stack an approved change touched. On older Portainer it also lets agents request temporary read-only sessions: without it, agents can still read manifests and propose changes, but can't read live cluster state. See [Settings](using-portainer-command/admin/settings.md#portainer-credential-for-sessions).
 {% endstep %}
 
 {% step %}
@@ -42,7 +42,7 @@ This lets agents request temporary read-only sessions. Without it, agents can st
 
 In **Agent gateway transport key**, click **Create the user and key for me**. Portainer-Command creates a Portainer user with access to Portainer-Command only, and stores its key.
 
-Nobody can connect an agent until this is set. On an OAuth or LDAP instance, create the user in your identity provider and paste its token instead. See [Settings](using-portainer-command/admin/settings.md#agent-gateway-transport-key).
+Until this is set, only an administrator can add a connection: on internal authentication, an administrator's first **Add connection** creates the key. On an OAuth or LDAP instance, **Settings** lists the steps to create the user in your identity provider and paste its token instead. See [Settings](using-portainer-command/admin/settings.md#agent-gateway-transport-key).
 {% endstep %}
 
 {% step %}
@@ -51,8 +51,8 @@ Nobody can connect an agent until this is set. On an OAuth or LDAP instance, cre
 To give users a hosted agent with nothing to install:
 
 1. In **Public Portainer address**, click the suggested address (or type your own) and click **Save**.
-2. In **AI Workspaces**, turn on **Enable AI Workspaces**.
-3. In **AI Workspace Provisioning**, choose the environment and a dedicated namespace for workspace pods, then click **Create the user and key for me** and **Save**.
+2. In **AI Workspace Provisioning**, choose the environment and a dedicated namespace for workspace pods, then click **Create the user and key for me** and **Save**. Leave **Run workspaces under AppArmor** on unless your nodes have no AppArmor.
+3. In **AI Workspaces**, turn on **Enable AI Workspaces**.
 4. In **AI Model**, choose a provider, enter its details, click **Test connection**, and **Save**.
 5. Review the **Workspace Network** mode. The default, **Allow some**, is a sensible starting point.
 
@@ -65,7 +65,7 @@ See [Settings](using-portainer-command/admin/settings.md#ai-workspaces) for ever
 Every environment is closed to agents until you open it. Go to **Environments**, click an environment, and on the **Agent configuration** tab:
 
 1. Choose what agents may do: read live state, read GitOps state, and propose changes.
-2. Under **Which repository**, choose the repository, branch, and directory the environment deploys from.
+2. Under **Which repository**, choose the repository, branch, and directory the environment deploys from, or **None** to let agents work only in the repositories behind what's already deployed. Turn on **Agents may propose into the repositories Argo CD and Flux deploy from** if you use them.
 3. Under **Which namespaces**, restrict agents to specific namespaces if you want to narrow what they can reach.
 4. Click **Save configuration**.
 
@@ -79,9 +79,9 @@ Every user, administrators included, completes two one-time steps under **Setup*
 
 {% stepper %}
 {% step %}
-### Connect to GitHub
+### Connect your Git host
 
-Store your own GitHub credential, so the pull requests your agent opens are authored by you. Without it, your agent can read but can't propose anything, and you can't approve proposals. See [Connect to GitHub](using-portainer-command/connect-to-github.md).
+Store your own credential for each Git host your environments use, so the changes your agent proposes are authored by you. Without it, your agent can read but can't propose anything, and you can't approve proposals. See [Connect your Git host](using-portainer-command/connect-to-github.md).
 {% endstep %}
 
 {% step %}
