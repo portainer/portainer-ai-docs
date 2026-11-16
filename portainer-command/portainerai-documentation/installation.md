@@ -48,6 +48,10 @@ Before anybody can connect an agent, an administrator needs to complete a few se
 
 Upgrade Portainer-Command from the add-ons catalog. The encryption key and database password carry forward across upgrades, so stored credentials stay readable.
 
+{% hint style="warning" %}
+Back up the database before you upgrade. Downgrading isn't supported. From 1.1.0, a version refuses to run on a database a newer version has used, including after `helm upgrade --atomic` rolls back: it stays unready and says which version to upgrade to. Upgrade again, or restore the backup you took before upgrading.
+{% endhint %}
+
 When you uninstall the add-on, its namespace, encryption key, and database volume are left in place, so history survives a reinstall.
 
 {% hint style="info" %}

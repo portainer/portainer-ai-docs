@@ -16,13 +16,21 @@ A workspace acts as you. It sees the environments you can see, and everything it
 
 The workspace pod starts and connects back to Portainer-Command on its own. Nothing connects in to it. Its status moves from **Starting** to **Connected** once it's ready, and **Chat** appears in the sidebar.
 
-Provisioning creates a Portainer access token named `AI Workspace` and an agent connection for the workspace. You still need to [connect to GitHub](../connect-to-github.md) for your workspace to propose changes.
+If it doesn't connect, its status says why:
+
+* **Can't reach Command**: the workspace can't reach Portainer's address. Ask an administrator to check the address workspaces use to reach Portainer.
+* **Failed** or **Can't be scheduled**: click **Restart** to try again, or ask an administrator to check the cluster.
+* **Stopped: AppArmor**: the node can't enforce AppArmor. An administrator needs to enable it on the nodes or turn it off in Settings. Then click **Start**.
+
+Provisioning creates a Portainer access token named `AI Workspace` and an agent connection for the workspace. You still need to [connect your Git host](../connect-to-github.md) for your workspace to propose changes.
 
 ## Chat with your workspace
 
 Click **Chat**, or **Open chat** on the **Manage** view. Type into **Message your workspace…** and send. You can ask it to do things such as list your environments, investigate a failing workload, or propose a change.
 
-While it works, you'll see its reasoning and the tools it calls. Click **Stop** to abort the current task.
+While it works, you'll see its reasoning and the tools it calls. Click **Stop** to abort the current task. Work the agent hands to a sub-task is labelled **Sub-task**.
+
+If the model provider refuses a request, for example because of a bad key or a rate limit, the provider's message appears in the chat. If the live connection drops, the chat reconnects and catches up on its own.
 
 When the workspace proposes a change, an approval card appears in the chat. If you can decide the proposal, you can approve it right there. The workspace is then told the proposal was merged, and asked to check that the change rolled out. See [Proposals](../proposals.md).
 
@@ -37,9 +45,9 @@ The **Manage** view shows your workspace's state, where it runs, when it was las
 | Action  | What it does                                                                                                                                                                                                                |
 | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Stop    | Stops the pod. The workspace keeps its identity, credential, and chat history, and connects back in on its own when started. The agent loses its own memory of the conversation, although you can still see the transcript. |
-| Start   | Starts a stopped workspace.                                                                                                                                                                                                 |
+| Start   | Starts a stopped workspace, including one stopped for AppArmor.                                                                                                                                                                                                 |
 | Restart | Restarts the workspace pod.                                                                                                                                                                                                 |
-| Destroy | Ends the workspace for good. There's no confirmation. Its record and transcript stay readable for review, and you can provision a new one.                                                                                  |
+| Destroy | Ends the workspace for good, once you confirm with **Destroy workspace**. Its record and transcript stay readable for review, and you can provision a new one.                                                                                  |
 
 <figure><img src="../../.gitbook/assets/command-AI-workspace.png" alt="AI Workspace management view"><figcaption></figcaption></figure>
 

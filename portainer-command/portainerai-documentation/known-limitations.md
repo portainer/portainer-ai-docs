@@ -2,16 +2,26 @@
 
 Portainer-Command is in beta. None of the following blocks installing it, but you should know about them before you roll it out.
 
-## GitHub only
+## Git hosts
 
-Proposals open pull requests on **GitHub**. Other Git hosts aren't supported yet, so the repositories your environments deploy from must be on GitHub for agents to propose changes.
+Proposals work on GitHub, GitLab, Azure DevOps, Bitbucket Cloud, Bitbucket Data Center, and other Git servers. See [Connect your Git host](using-portainer-command/connect-to-github.md#supported-git-hosts). Some limits apply:
+
+* Gitea isn't supported.
+* A self-hosted Git server with a certificate from a private CA can't be reached.
+* On a plain Git server, change requests and their comments live in Portainer-Command.
+* A rejected proposal on Bitbucket Cloud can't be reopened. Ask the agent to propose the change again.
+
+## Proposing into what's already deployed
+
+* Portainer stacks, edge stacks, and GitOps workflow deployments are edit-only: no new files or renames. Deleting every file of a stack or edge stack removes it; deleting some is refused.
+* Argo CD on a separate management cluster, an Argo CD Application that deploys to another cluster, and Rancher Fleet aren't supported.
+* Approving an Argo CD or Flux proposal merges it but doesn't sync it. A reconciler that syncs manually waits for someone to sync it.
+* An emergency halt closes the environment to agents, but doesn't stop Portainer, Argo CD, or Flux applying a merge.
 
 ## OAuth and LDAP authentication
 
-Two features rely on Portainer-Command creating Portainer users with a password, which Portainer refuses when it uses OAuth or LDAP authentication:
-
-* **Read-only grants.** On an OAuth or LDAP instance, `request_environment_access` can't issue a kubeconfig, and the tool says so. Agents can still read an environment's manifests and propose changes normally.
-* **One-click transport key setup.** An administrator has to create the transport user in the identity provider, sign in as it once to create an access token, and paste the token into **Settings**. See [Settings](using-portainer-command/admin/settings.md).
+* **Read-only grants.** On Portainer 2.45.2 or later, or 3.0, read-only grants are scoped kubeconfigs and work under any authentication method. On older Portainer, a grant is a temporary Portainer user with a password, which OAuth and LDAP refuse. There, `request_environment_access` can't issue a kubeconfig and tells the agent to upgrade Portainer. Agents can still read an environment's manifests and propose changes normally.
+* **One-click transport key setup.** Portainer-Command can only create the transport user on internal authentication. On OAuth or LDAP, **Settings** lists the steps: create the user in your identity provider, sign in as it once to create an access token, and paste the token in. See [Settings](using-portainer-command/admin/settings.md#agent-gateway-transport-key).
 
 ## Async Edge environments
 
@@ -23,7 +33,7 @@ Agent traffic passes through Portainer's add-on gateway, so each MCP client send
 
 ## Custom resources aren't readable
 
-A read-only grant covers Kubernetes' built-in resource types. Custom resources, such as Kyverno policies or policy reports, aren't visible to an agent through a grant.
+A read-only grant covers Kubernetes' built-in resource types. Custom resources, such as Kyverno policies or policy reports, aren't visible to an agent through a grant. On Portainer 2.45.2 or 3.0, RBAC objects such as Roles and RoleBindings aren't readable either.
 
 ## A proposer can approve their own agent's proposal
 

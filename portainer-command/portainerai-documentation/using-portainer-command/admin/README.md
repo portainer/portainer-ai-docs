@@ -20,4 +20,4 @@ Portainer-Command gives you two ways to stop agents immediately. Neither deletes
 * **Halt an environment**: closes the environment to every agent and ends every live session on it. Use this when something is wrong in one place. See [Emergency halt](environments.md#emergency-halt).
 * **Halt a user**: revokes all of one person's connections and sessions, and stops their workspace, everywhere. Use this when a person's credentials or agent may be compromised. See [Emergency halt](users.md#emergency-halt).
 
-If you need to go further, you can act in Portainer directly: shut down the Portainer-Command add-on, or delete the temporary `command-agent-…` users that back live sessions.
+If you need to go further, you can act in Portainer directly: shut down the Portainer-Command add-on, or, on Portainer older than 2.45.2, delete the temporary `command-agent-…` users that back live sessions. On Portainer 2.45.2 or 3.0, sessions are scoped kubeconfigs that end at their expiry, at most eight hours out.

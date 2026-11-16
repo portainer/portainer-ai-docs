@@ -15,7 +15,7 @@
 * [Proposals](using-portainer-command/proposals.md)
 * [My sessions](using-portainer-command/my-sessions.md)
 * [Connect your agent](using-portainer-command/connect-your-agent.md)
-* [Connect to GitHub](using-portainer-command/connect-to-github.md)
+* [Connect your Git host](using-portainer-command/connect-to-github.md)
 * [Administration](using-portainer-command/admin/README.md)
   * [Timeline](using-portainer-command/admin/timeline.md)
   * [Environments](using-portainer-command/admin/environments.md)

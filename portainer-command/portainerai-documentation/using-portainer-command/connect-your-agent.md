@@ -1,9 +1,13 @@
 # Connect your agent
 
-A connection lets one MCP-capable agent, such as Claude Code, Claude Desktop, Cursor, or Windsurf, act as you through Portainer-Command. It uses your own Portainer credential, so the agent sees exactly what you see and nothing more. Agents can read; the only way one can change anything is a pull request that a person approves.
+A connection lets one MCP-capable agent, such as Claude Code, Cursor, or Windsurf, act as you through Portainer-Command. It uses your own Portainer credential, so the agent sees exactly what you see and nothing more. Agents can read; the only way one can change anything is a change request that a person approves.
 
 {% hint style="info" %}
-If **Add connection** is disabled and you see **Agent connections are not set up yet**, an administrator needs to set the [transport key](admin/settings.md#agent-gateway-transport-key) first.
+Connections need an instance-wide [transport key](admin/settings.md#agent-gateway-transport-key). If none is set yet:
+
+* An administrator on a Portainer that uses internal authentication can just add a connection. Portainer-Command creates the first transport key and says so: **Gateway transport key generated. Find it under Administration → Settings.**
+* On an OAuth or LDAP instance, administrators see **Agent connections are not set up yet**, and need to set the key in **Settings** first.
+* Other users see **Add connection** disabled until an administrator has set it up.
 {% endhint %}
 
 ## Create a connection
@@ -42,7 +46,7 @@ claude mcp add --transport http portainer-command https://your-portainer/addons/
   --header "X-Command-Token: cmd_…"
 ```
 
-For any client that reads a JSON configuration file, such as **Cursor**, **Windsurf**, or **Claude Desktop**, add the `mcp.json` snippet shown:
+For other clients that connect to a remote MCP server with custom headers, such as **Cursor** or **Windsurf**, add the `mcp.json` snippet shown. Claude Desktop isn't supported: its configuration file only runs local servers, and its connectors can't send these headers.
 
 ```json
 {
@@ -68,7 +72,7 @@ Each client needs both headers. `X-API-Key` is the instance-wide transport key t
 To try it out, ask your agent to list the environments it can reach.
 
 {% hint style="info" %}
-To propose changes, you also need to [connect to GitHub](connect-to-github.md). Without a Git credential, your agent can read but has nothing to open a pull request with.
+To propose changes, you also need to [connect your Git host](connect-to-github.md). Without a Git credential, your agent can read but has nothing to open a change request with.
 {% endhint %}
 
 ## Manage your connections
@@ -81,6 +85,8 @@ To revoke a connection, click **Revoke** and then **Revoke connection**. This im
 * Ends any sessions the connection holds.
 * Deletes the Portainer access token Portainer-Command created for it.
 * Destroys a workspace running on it. A stopped workspace is left in place, but can't start again.
+
+If the revoke itself fails, you'll see **The connection may still be live**. Check the connection, and revoke it again if it's still active.
 
 Revoke a connection whenever a machine is lost, a token might have leaked, or you stop using an agent.
 

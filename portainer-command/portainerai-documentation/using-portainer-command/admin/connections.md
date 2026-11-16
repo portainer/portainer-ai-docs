@@ -38,6 +38,6 @@ Revoking a connection:
 3. Deletes the Portainer access token Portainer-Command created for it.
 4. Destroys a workspace running on it.
 
-Progress is shown step by step. If something doesn't finish, Portainer-Command retries the remaining steps itself.
+Progress is shown step by step. If a cleanup step doesn't finish (**Not everything finished**), Portainer-Command retries it itself. If the revoke itself fails, you'll see **The connection may still be live**: check the connection, and revoke it again if it's still active.
 
 To revoke everything one person holds at once, use [Emergency halt](users.md#emergency-halt) on their user page.
